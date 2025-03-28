@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { getCurrentUser, logIn, logOut, signUp } from "../services/authService";
 
-const AuthContextProvider = ({children}) => {
+const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -23,29 +23,26 @@ const AuthContextProvider = ({children}) => {
   };
 
   const logout = async () => {
-    logOut().then(setUser)
     try {
-        logOut().then(setUser)
-      } catch (e) {
-        throw new Error(e?.message);
-      }
-  }
+      logOut().then(setUser);
+    } catch (e) {
+      throw new Error(e?.message);
+    }
+  };
 
   const init = () => {
     getCurrentUser()
       .then(setUser)
       .catch(() => setUser(null))
-      .finally(() => setLoading(false))
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
-    init()
+    init();
   }, []);
 
-  const value = { user, loading, signup, login,logout };
-  return <AuthContext value={value}>
-    {children}
-  </AuthContext>;
+  const value = { user, loading, signup, login, logout };
+  return <AuthContext value={value}>{children}</AuthContext>;
 };
 
 export default AuthContextProvider;
