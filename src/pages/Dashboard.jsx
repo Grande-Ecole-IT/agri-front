@@ -1,40 +1,61 @@
-import React from "react";
-import ServiceCard from "../components/CardService";
-import Header from "../components/Header";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import backGrounImage from "../assets/bg.jpg";
+import React from "react";
+import assistance from "../assets/assistance.jpg";
+import bg from "../assets/bg.jpg";
+import fond from "../assets/fond.jpg";
+import Header from "../components/Header";
+import ServiceCard from "../components/ServiceCard";
 
 const Dashboard = () => {
   return (
-    <div 
+    <div
       className="relative h-screen overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: `url(${backGrounImage})` }}
+      style={{ backgroundImage: `url(${bg})` }}
     >
-      <div className="container mx-auto backdrop-blur-xs bg-black/10">
-        <Header />
-        <div className="h-screen flex flex-col items-center space-y-10 justify-center rounded-xl p-10">
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-center"
-          >
-            <div className="rounded-full bg-white text-[#235F2A] w-fit mx-auto px-6 py-2 mb-4 font-bold text-lg">Welcome to AiGro</div>
-            <h1 className="text-white text-5xl font-bold mb-4">Welcome to the Dashboard</h1>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Expérimentez la puissance de l'IA pour améliorer votre production et ainsi augmenter vos revenus ainsi que votre notoriété.
-            </p>
-          </motion.div>
+      <div className="backdrop-blur-xs bg-black/50">
+        <div className="container mx-auto">
+          <Header />
 
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ duration: 1.5 }}
-            className="flex space-x-20"
-          >
-            <ServiceCard />
-            <ServiceCard />
-          </motion.div>
+          <div className="flex flex-col items-center py-20 px-4">
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                Optimisez votre agriculture <br />
+                avec l'intelligence artificielle
+              </h1>
+              <p className="text-white text-lg md:text-xl max-w-3xl mx-auto">
+                Découvrez des solutions innovantes pour augmenter vos rendements
+                et réduire vos coûts grâce à nos technologies intelligentes.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, staggerChildren: 0.2 }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full max-w-6xl"
+            >
+              <ServiceCard
+                title="Diagnostic des maladies"
+                content="Notre IA analyse en temps réel l'état de santé de vos plantes et identifie les maladies, carences ou problèmes environnementaux."
+                buttonText="Essayer maintenant"
+                image={assistance}
+                action={() => {}}
+              />
+              <ServiceCard
+                title="Calendrier cultural intelligent"
+                content="Recevez des recommandations personnalisées sur les cultures à planter chaque mois selon votre sol et climat."
+                buttonText="Démarrer"
+                image={fond}
+                action={() => {}}
+              />
+            </motion.div>
+          </div>
         </div>
       </div>
     </div>
