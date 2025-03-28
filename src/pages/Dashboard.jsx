@@ -1,12 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import React, { useState } from "react";
+import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
+import { useNavigate } from "react-router";
 import assistance from "../assets/assistance.jpg";
 import bg from "../assets/bg.jpg";
 import fond from "../assets/fond.jpg";
 import Header from "../components/Header";
 import ServiceCard from "../components/ServiceCard";
-import { AiOutlineCloudUpload, AiOutlineClose } from "react-icons/ai";
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,7 +22,7 @@ const Dashboard = () => {
   };
 
   const handleClick = () => {
-    console.log("Ds")
+    console.log("Ds");
     setIsModalOpen(true);
   };
 
@@ -36,9 +37,10 @@ const Dashboard = () => {
     setIsModalOpen(false); // Fermer le modal après soumission
   };
 
+  const navigate = useNavigate();
   return (
     <div
-      className="relative h-screen overflow-hidden bg-cover bg-center"
+      className="relative min-h-screen overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="backdrop-blur-xs bg-black/50">
@@ -66,7 +68,7 @@ const Dashboard = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, staggerChildren: 0.2 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full max-w-6xl"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full "
             >
               <ServiceCard
                 title="Diagnostic des maladies"
@@ -80,7 +82,7 @@ const Dashboard = () => {
                 content="Recevez des recommandations personnalisées sur les cultures à planter chaque mois selon votre sol et climat."
                 buttonText="Démarrer"
                 image={fond}
-                action={() => {}}
+                action={() => navigate("/calendrier")}
               />
             </motion.div>
 
