@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { getCurrentUser, logIn, logOut, signUp } from "../services/authService";
 
-const AuthContextProvider = () => {
+const AuthContextProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -31,18 +31,21 @@ const AuthContextProvider = () => {
       }
   }
 
-  const init = async () => {
+  const init = () => {
     getCurrentUser()
       .then(setUser)
-      .then(() => setLoading(false));
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false))
   };
 
   useEffect(() => {
-    init();
+    init()
   }, []);
 
   const value = { user, loading, signup, login,logout };
-  return <AuthContext value={value}></AuthContext>;
+  return <AuthContext value={value}>
+    {children}
+  </AuthContext>;
 };
 
 export default AuthContextProvider;
