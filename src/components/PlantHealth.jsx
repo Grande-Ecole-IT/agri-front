@@ -1,41 +1,45 @@
-import { FiDroplet, FiSun, FiThermometer } from "react-icons/fi";
+import { FiAlertCircle, FiDroplet, FiTrendingUp, FiCalendar, FiThermometer, FiCheckCircle } from "react-icons/fi"; 
+import { FaLeaf } from "react-icons/fa";  // Importation de l'icône de feuille depuis FontAwesome
+
 import SmartAnalysis from "./SmartAnalysis";
 
-export default function PlantHealth() {
+export default function PlantHealth(data) {
+
+  console.dir(data.data.symptoms)
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">Plant Health</h2>
+        <h2 className="text-xl font-semibold">Diagnostic de la plante : {data.data.type}</h2>
       </div>
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid h-1/2 grid-cols-2 gap-4 mb-3">
+        <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+          <FiAlertCircle className="text-red-500 text-xl" />
+          <div>
+            <p className="text-sm text-gray-500">Maladie détectée</p>
+            <p className="font-semibold">{data.data.symptoms.name}</p>
+          </div>
+        </div>
         <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
           <FiDroplet className="text-blue-500 text-xl" />
           <div>
-            <p className="text-sm text-gray-500">Water Level</p>
-            <p className="font-semibold">Low</p>
+            <p className="text-sm text-gray-500">Cause probable</p>
+            <p className="font-semibold">{data.data.symptoms.cause}</p>
           </div>
         </div>
         <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-          <FiThermometer className="text-red-500 text-xl" />
+          <FiThermometer className="text-orange-500 text-xl" />
           <div>
-            <p className="text-sm text-gray-500">Humidity</p>
-            <p className="font-semibold">56%</p>
+            <p className="text-sm text-gray-500">Gravité</p>
+            <p className="font-semibold">{data.data.symptoms.severity}</p>
           </div>
         </div>
         <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-          <FiSun className="text-yellow-500 text-xl" />
+          <FiCalendar className="text-yellow-500 text-xl" />
           <div>
-            <p className="text-sm text-gray-500">Light</p>
-            <p className="font-semibold">Indirect</p>
+            <p className="text-sm text-gray-500">Saison propice</p>
+            <p className="font-semibold">{data.data.symptoms.seasonal_tendency}</p>
           </div>
         </div>
-        <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-          <FiDroplet className="text-green-500 text-xl" />
-          <div>
-            <p className="text-sm text-gray-500">Fertilization</p>
-            <p className="font-semibold">Moderate</p>
-          </div>
-        </div>{" "}
       </div>
       <SmartAnalysis />
     </div>

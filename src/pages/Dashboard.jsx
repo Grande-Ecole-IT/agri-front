@@ -8,15 +8,13 @@ import bg from "../assets/bg.jpg";
 import fond from "../assets/fond.jpg";
 import Header from "../components/Header";
 import ServiceCard from "../components/ServiceCard";
-import { useAuth } from "../hooks/useAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [file, setFile] = useState(null);
-  
-  const {user} = useAuth();
-
-  console.log(user)
+  const [analysis, setAnalysis] = useState();
+  const navigate = useNavigate();
 
   const handleFileUpload = (e) => {
     const uploadedFile = e.target.files[0]; // Récupérer le premier fichier
@@ -27,7 +25,6 @@ const Dashboard = () => {
   };
 
   const handleClick = () => {
-    console.log("Ds");
     setIsModalOpen(true);
   };
 
@@ -36,13 +33,40 @@ const Dashboard = () => {
     setFile(null); // Réinitialiser le fichier après la fermeture du modal
   };
 
-  const handleSubmit = () => {
-    console.log("Fichier uploadé :", file);
-    setFile(null); // Réinitialiser le fichier après soumission
-    setIsModalOpen(false); // Fermer le modal après soumission
+  const postData = async (dataToSend) => {
+    if (!file) return;
+    try {
+      const response = await fetch(
+        "https://agri-back-fo2l.onrender.com/plant-healths/",
+        {
+          method: "POST",
+          body: dataToSend,
+        }
+      );
+
+      if (!response.ok) {
+        toast.error("Image non envoyee");
+        throw new Error(`Erreur HTTP: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setAnalysis(result);
+      navigate("/analysis", { state: result });
+      toast.success("Image envoyee");
+    } catch (error) {
+      toast.error("Server error");
+      console.error("Erreur lors de l'envoi de l'image :", error);
+    }
   };
 
-  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("plant_image", file);
+    postData(formData)
+  };
+
+  console.log(analysis);
   return (
     <div
       className="relative min-h-screen overflow-hidden bg-cover bg-center"
@@ -99,67 +123,83 @@ const Dashboard = () => {
                   transition={{ duration: 0.3 }}
                   className="bg-white rounded-2xl p-6 w-1/3 space-y-4 shadow-lg relative"
                 >
-                  <button
-                    className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
-                    onClick={closeModal}
-                  >
-                    <AiOutlineClose size={24} />
-                  </button>
-                  <h2 className="text-2xl font-bold mb-2">
-                    Télécharger des fichiers
-                  </h2>
-                  <p className="text-gray-500 mb-4">
-                    Téléchargez vos fichiers de projet ici.
-                  </p>
-
-                  <div className="border-2 border-green-400 bg-green-50 p-4 rounded-xl text-center cursor-pointer hover:bg-green-100 transition">
-                    <AiOutlineCloudUpload
-                      size={40}
-                      className="mx-auto mb-2 text-green-600"
-                    />
-                    <label
-                      htmlFor="file-upload"
-                      className="cursor-pointer text-green-600 font-semibold"
+                  <form onSubmit={handleSubmit}>
+                    <button
+                      className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+                      onClick={closeModal}
                     >
-                      Faites glisser & déposez votre fichier ici ou cliquez pour
-                      sélectionner
-                      <input
-                        id="file-upload"
-                        type="file"
-                        accept="image/*" // Limite le téléchargement aux images
-                        className={`hidden ${file ? "cursor-not-allowed" : ""}`} // Désactive l'input après upload
-                        onChange={handleFileUpload}
-                        disabled={file} // Désactive l'input après upload
-                      />
-                    </label>
-                  </div>
+                      <AiOutlineClose size={24} />
+                    </button>
+                    <h2 className="text-2xl font-bold mb-2">
+                      Télécharger des fichiers
+                    </h2>
+                    <p className="text-gray-500 mb-4">
+                      Téléchargez vos fichiers de projet ici.
+                    </p>
 
-                  {/* Affichage de l'aperçu de l'image téléchargée */}
-                  {file && (
-                    <div className="mt-4 text-center">
-                      <h3 className="text-lg font-bold mb-2">
-                        Aperçu de l'image
-                      </h3>
-                      <img
-                        src={URL.createObjectURL(file)} // Générer l'URL temporaire pour l'image
-                        alt="Preview"
-                        className="w-full h-auto rounded-lg"
+                    <div className="border-2 border-green-400 bg-green-50 p-4 rounded-xl text-center cursor-pointer hover:bg-green-100 transition">
+                      <AiOutlineCloudUpload
+                        size={40}
+                        className="mx-auto mb-2 text-green-600"
                       />
+                      <label
+                        htmlFor="file-upload"
+                        className="cursor-pointer text-green-600 font-semibold"
+                      >
+                        Faites glisser & déposez votre fichier ici ou cliquez
+                        pour sélectionner
+                        <input
+                          id="file-upload"
+                          type="file"
+                          name="image"
+                          accept="image/*" // Limite le téléchargement aux images
+                          className={`hidden ${
+                            file ? "cursor-not-allowed" : ""
+                          }`} // Désactive l'input après upload
+                          onChange={handleFileUpload}
+                          disabled={file} // Désactive l'input après upload
+                        />
+                      </label>
                     </div>
-                  )}
 
-                  <button
-                    onClick={handleSubmit}
-                    className="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition"
-                  >
-                    Soumettre
-                  </button>
+                    {/* Affichage de l'aperçu de l'image téléchargée */}
+                    {file && (
+                      <div className="mt-4 text-center">
+                        <h3 className="text-lg font-bold mb-2">
+                          Aperçu de l'image
+                        </h3>
+                        <img
+                          src={URL.createObjectURL(file)} // Générer l'URL temporaire pour l'image
+                          alt="Preview"
+                          className="w-full h-auto rounded-lg"
+                        />
+                      </div>
+                    )}
+
+                    <button className="w-full mt-5 bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition">
+                      Soumettre
+                    </button>
+                  </form>
                 </motion.div>
               </div>
             )}
           </div>
         </div>
       </div>
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            background: "#1e2939",
+            color: "#fff",
+            borderRadius: "8px",
+            padding: "16px",
+            border: "1px solid #364153",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          },
+        }}
+      />
     </div>
   );
 };

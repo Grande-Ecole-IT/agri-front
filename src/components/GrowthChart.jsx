@@ -1,6 +1,5 @@
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import ChatBot from "./ChatBot";
-import { div } from "framer-motion/client";
 
 const data = [
   { name: "Aug", value: 2 },

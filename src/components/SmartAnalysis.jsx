@@ -5,8 +5,8 @@ export default function SmartAnalysis() {
     <div className="bg-gray-600 text-white rounded-xl p-6 shadow-sm">
       <div className="flex justify-between items-center mb-4">
         <div>
-          <h2 className="text-xl font-semibold">Smart Analysis</h2>
-          <p className="text-sm text-gray-300">Listen to key points</p>
+          <h2 className="text-xl font-semibold">Traitements conseille</h2>
+          <p className="text-sm text-gray-300">Ecoutes vocal des traitements</p>
         </div>
         <button className="p-2 bg-gray-500 rounded-full hover:bg-gray-400 transition-colors">
           <FiPause />
