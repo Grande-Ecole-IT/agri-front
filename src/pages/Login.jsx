@@ -12,15 +12,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const { loading, stopLoading, startLoading } = useLoading();
-  const { user } = useAuth()
   const navigate = useNavigate();
-
-  if(user) return navigate('/dashboard', {replace: true})
-
   const handleSubmit = (e) => {
     e.preventDefault();
     startLoading();
-    login(email, password).catch(console.log).finally(stopLoading);
+    login(email, password)
+    .then(() => navigate("/dashboard", { replace: true }))
+    .catch(console.log).finally(stopLoading);
   };
 
   return (

@@ -3,7 +3,7 @@ import { FaPlaceOfWorship } from "react-icons/fa";
 import { FiLock, FiMail, FiUser } from "react-icons/fi";
 import { ImSpinner9 } from "react-icons/im";
 import { MdPlace } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BackIcon from "../components/BackIcon";
 import MainBackground from "../components/MainBackground";
 import { useAuth } from "../hooks/useAuth";
@@ -20,6 +20,7 @@ const Register = () => {
 
   const { signup } = useAuth();
   const { loading, stopLoading, startLoading } = useLoading();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
@@ -28,7 +29,10 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     startLoading();
-    signup(info).catch(console.log).finally(stopLoading);
+    signup(info)
+      .then(() => navigate("/login", { replace: true }))
+      .catch(console.log)
+      .finally(stopLoading);
   };
 
   return (

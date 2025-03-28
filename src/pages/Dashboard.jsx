@@ -8,10 +8,15 @@ import bg from "../assets/bg.jpg";
 import fond from "../assets/fond.jpg";
 import Header from "../components/Header";
 import ServiceCard from "../components/ServiceCard";
+import { useAuth } from "../hooks/useAuth";
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [file, setFile] = useState(null); // Gérer un seul fichier au lieu d'un tableau
+  const [file, setFile] = useState(null);
+  
+  const {user} = useAuth();
+
+  console.log(user)
 
   const handleFileUpload = (e) => {
     const uploadedFile = e.target.files[0]; // Récupérer le premier fichier

@@ -8,9 +8,7 @@ const ProtectedRoute = ({children}) => {
     navigate('/login', {replace: true});
     return null;
   }
-  return (
-    {children}
-  )
+  return children;
 }
 
 export default ProtectedRoute
