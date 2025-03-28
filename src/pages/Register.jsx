@@ -5,6 +5,10 @@ import { RiPlantLine, RiRobot2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import robotAnimation from "../assets/robot-farmer.json";
 import { useAuth } from "../hooks/useAuth";
+import Hologrid from "../components/background/Hologrid";
+import FloatingLeaves from "../components/background/FloatingLeaves";
+import DataRain from "../components/background/DataRain";
+import PulseEffect from "../components/ui/PulseEffect";
 
 const Register = () => {
   const [info, setInfo] = useState({
@@ -27,8 +31,12 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-dark animate-gradient relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 relative overflow-hidden">
       {/* Background Pattern */}
+      <Hologrid />
+      <DataRain />
+      <FloatingLeaves />
+      <PulseEffect />
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJub25lIiBzdHJva2U9IiMwNjRFM0IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iOCA4IiBvcGFjaXR5PSIwLjEiLz48L3N2Zz4=')] opacity-30"></div>
 
