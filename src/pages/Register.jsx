@@ -5,6 +5,10 @@ import { RiPlantLine, RiRobot2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import robotAnimation from "../assets/robot-farmer.json";
 import { useAuth } from "../hooks/useAuth";
+import Hologrid from "../components/background/Hologrid";
+import FloatingLeaves from "../components/background/FloatingLeaves";
+import DataRain from "../components/background/DataRain";
+import PulseEffect from "../components/ui/PulseEffect";
 
 const Register = () => {
   const [info, setInfo] = useState({
@@ -27,36 +31,40 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bolt-dark animate-gradient relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 relative overflow-hidden">
       {/* Background Pattern */}
+      <Hologrid />
+      <DataRain />
+      <FloatingLeaves />
+      <PulseEffect />
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJub25lIiBzdHJva2U9IiMwNjRFM0IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iOCA4IiBvcGFjaXR5PSIwLjEiLz48L3N2Zz4=')] opacity-30"></div>
 
         {/* Floating Icons */}
-        <div className="absolute top-20 left-20 text-bolt-light/30 text-6xl animate-float">
+        <div className="absolute top-20 left-20 text-light/30 text-6xl animate-float">
           <RiPlantLine />
         </div>
         <div
-          className="absolute bottom-20 right-20 text-bolt-light/30 text-6xl animate-float"
+          className="absolute bottom-20 right-20 text-light/30 text-6xl animate-float"
           style={{ animationDelay: "-2s" }}
         >
           <RiPlantLine />
         </div>
         <div
-          className="absolute top-40 right-40 text-bolt-light/30 text-4xl animate-float"
+          className="absolute top-40 right-40 text-light/30 text-4xl animate-float"
           style={{ animationDelay: "-4s" }}
         >
           <RiRobot2Line />
         </div>
         <div
-          className="absolute bottom-20 left-20 text-bolt-light/30 text-4xl animate-float"
+          className="absolute bottom-20 left-20 text-light/30 text-4xl animate-float"
           style={{ animationDelay: "-4s" }}
         >
           <RiRobot2Line />
         </div>
       </div>
 
-      <div className="w-full max-w-3xl p-8 space-y-8 bg-white backdrop-blur-sm rounded-2xl shadow-2xl border border-bolt-light/20 relative z-10 hover:shadow-bolt-dark/20 transition-all duration-300">
+      <div className="w-full max-w-3xl p-8 space-y-8 bg-white/100 backdrop-blur-sm rounded-2xl shadow-2xl border border-bolt-light/20 relative z-10 hover:shadow-bolt-dark/20 transition-all duration-300">
         {/* Logo Animation */}
         <div className="text-center relative">
           <div className="absolute -top-24 left-1/2 transform -translate-x-1/2 w-32 h-32">
@@ -75,7 +83,7 @@ const Register = () => {
           className="flex flex-col justify-center items-center space-y-6"
         >
           <div className="grid grid-cols-2 gap-5 w-full">
-            <div className="space-y-2">
+            <div className="flex flex-col space-y-3">
               <label
                 htmlFor="name"
                 className="text-sm font-medium text-bolt-dark"
@@ -96,7 +104,7 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col space-y-3">
               <label
                 htmlFor="email"
                 className="text-sm font-medium text-bolt-dark"
@@ -117,7 +125,7 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col space-y-3">
               <label
                 htmlFor="email"
                 className="text-sm font-medium text-bolt-dark"
@@ -138,7 +146,7 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col space-y-3">
               <label
                 htmlFor="email"
                 className="text-sm font-medium text-bolt-dark"
@@ -159,7 +167,7 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="flex flex-col space-y-3">
               <label
                 htmlFor="password"
                 className="text-sm font-medium text-bolt-dark"

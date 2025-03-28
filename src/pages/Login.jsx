@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { RiPlantLine, RiRobot2Line } from 'react-icons/ri';
 import Lottie from 'lottie-react';
+import Hologrid from "../components/background/Hologrid";
+import FloatingLeaves from "../components/background/FloatingLeaves";
+import DataRain from "../components/background/DataRain";
+import PulseEffect from "../components/ui/PulseEffect";
 import robotAnimation from '../assets/robot-farmer.json';
+import ThreeDScene from "../components/3D/ThreeDScene";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,25 +20,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bolt-dark animate-gradient relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJub25lIiBzdHJva2U9IiMwNjRFM0IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iOCA4IiBvcGFjaXR5PSIwLjEiLz48L3N2Zz4=')] opacity-30"></div>
-        
-        {/* Floating Icons */}
-        <div className="absolute top-20 left-20 text-bolt-light/30 text-6xl animate-float">
-          <RiPlantLine />
-        </div>
-        <div className="absolute bottom-20 right-20 text-bolt-light/30 text-6xl animate-float" style={{ animationDelay: '-2s' }}>
-          <RiPlantLine />
-        </div>
-        <div className="absolute top-40 right-40 text-bolt-light/30 text-4xl animate-float" style={{ animationDelay: '-4s' }}>
-          <RiRobot2Line />
-        </div>
-        <div className="absolute bottom-20 left-20 text-bolt-light/30 text-4xl animate-float" style={{ animationDelay: '-4s' }}>
-          <RiRobot2Line />
-        </div>
-      </div>
+      <Hologrid />
+      <DataRain />
+      <FloatingLeaves />
+      <PulseEffect />
       
       <div className="w-full max-w-md p-8 space-y-8 bg-white backdrop-blur-sm rounded-2xl shadow-2xl border border-bolt-light/20 relative z-10 hover:shadow-bolt-dark/20 transition-all duration-300">
         {/* Logo Animation */}
@@ -52,7 +44,7 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
+          <div className="flex flex-col space-y-3">
             <label htmlFor="email" className="text-sm font-medium text-bolt-dark">
               Email
             </label>
@@ -70,7 +62,7 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="flex flex-col space-y-3">
             <label htmlFor="password" className="text-sm font-medium text-bolt-dark">
               Mot de passe
             </label>
