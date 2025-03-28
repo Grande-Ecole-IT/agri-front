@@ -3,18 +3,21 @@ import { motion } from "framer-motion";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
+import { ImSpinner9 } from "react-icons/im";
 import { useNavigate } from "react-router";
 import assistance from "../assets/assistance.jpg";
 import bg from "../assets/bg.jpg";
 import fond from "../assets/fond.jpg";
 import Header from "../components/Header";
 import ServiceCard from "../components/ServiceCard";
+import { useLoading } from "../hooks/useLoading";
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [file, setFile] = useState(null);
   const [analysis, setAnalysis] = useState();
   const navigate = useNavigate();
+  const { loading, stopLoading, startLoading } = useLoading();
 
   const handleFileUpload = (e) => {
     const uploadedFile = e.target.files[0];
@@ -51,6 +54,7 @@ const Dashboard = () => {
       const result = await response.json();
       setAnalysis(result);
       navigate("/analysis", { state: { result, image: file } });
+      stopLoading();
       toast.success("Image envoyee");
     } catch (error) {
       toast.error("Server error");
@@ -60,6 +64,7 @@ const Dashboard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    startLoading();
     const formData = new FormData();
     formData.append("plant_image", file);
     postData(formData);
@@ -175,8 +180,9 @@ const Dashboard = () => {
                       </div>
                     )}
 
-                    <button className="w-full mt-5 bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition">
-                      Soumettre
+                    <button className="w-full flex items-center justify-center space-x-4 mt-5 bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition">
+                      {loading && <ImSpinner9 className="text-xl animate-spin"/>}
+                      <span>Soumettre</span>
                     </button>
                   </form>
                 </motion.div>
