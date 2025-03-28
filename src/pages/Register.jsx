@@ -4,10 +4,8 @@ import { FiLock, FiMail, FiUser } from "react-icons/fi";
 import { ImSpinner9 } from "react-icons/im";
 import { MdPlace } from "react-icons/md";
 import { Link } from "react-router-dom";
-import DataRain from "../components/background/DataRain";
-import FloatingLeaves from "../components/background/FloatingLeaves";
-import Hologrid from "../components/background/Hologrid";
-import PulseEffect from "../components/ui/PulseEffect";
+import BackIcon from "../components/BackIcon";
+import MainBackground from "../components/MainBackground";
 import { useAuth } from "../hooks/useAuth";
 import { useLoading } from "../hooks/useLoading";
 
@@ -34,11 +32,8 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 relative overflow-hidden">
-      <Hologrid />
-      <DataRain />
-      <FloatingLeaves />
-      <PulseEffect />
+    <MainBackground>
+      <BackIcon />
 
       <div className="w-full max-w-3xl p-8 space-y-8 bg-white rounded-2xl shadow-2xl border border-bolt-light/20 relative z-10 hover:shadow-bolt-dark/20 transition-all duration-300">
         <div className="text-center relative">
@@ -178,7 +173,7 @@ const Register = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </MainBackground>
   );
 };
 

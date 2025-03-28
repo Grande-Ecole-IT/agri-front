@@ -1,13 +1,9 @@
-import Lottie from "lottie-react";
 import { useState } from "react";
 import { FiLock, FiMail } from "react-icons/fi";
 import { ImSpinner9 } from "react-icons/im";
 import { Link } from "react-router-dom";
-import robotAnimation from "../assets/robot-farmer.json";
-import DataRain from "../components/background/DataRain";
-import FloatingLeaves from "../components/background/FloatingLeaves";
-import Hologrid from "../components/background/Hologrid";
-import PulseEffect from "../components/ui/PulseEffect";
+import BackIcon from "../components/BackIcon";
+import MainBackground from "../components/MainBackground";
 import { useAuth } from "../hooks/useAuth";
 import { useLoading } from "../hooks/useLoading";
 
@@ -24,22 +20,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 relative overflow-hidden">
-      <Hologrid />
-      <DataRain />
-      <FloatingLeaves />
-      <PulseEffect />
-
+    <MainBackground>
+      <BackIcon />
       <div className="w-full max-w-md p-8 space-y-8 bg-white backdrop-blur-sm rounded-2xl shadow-2xl border border-bolt-light/20 relative z-10 hover:shadow-bolt-dark/20 transition-all duration-300">
-        {/* Logo Animation */}
         <div className="text-center relative">
-          <div className="absolute -top-24 left-1/2 transform -translate-x-1/2 w-32 h-32">
-            <Lottie
-              animationData={robotAnimation}
-              loop={true}
-              className="w-full h-full"
-            />
-          </div>
           <h2 className="text-4xl font-bold text-bolt-dark mt-12 mb-2">
             <span className="text-lime-300">Log</span>
             In
@@ -111,7 +95,7 @@ const Login = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </MainBackground>
   );
 };
 

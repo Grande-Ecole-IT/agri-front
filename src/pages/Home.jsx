@@ -1,11 +1,8 @@
 import ThreeDScene from "../components/3D/ThreeDScene";
 import AILoader from "../components/AILoader";
-import DataRain from "../components/background/DataRain";
-import FloatingLeaves from "../components/background/FloatingLeaves";
-import Hologrid from "../components/background/Hologrid";
 import Header from "../components/Header";
 import HeroContent from "../components/HeroContent";
-import PulseEffect from "../components/ui/PulseEffect";
+import MainBackground from "../components/MainBackground";
 import { useAuth } from "../hooks/useAuth";
 
 const Home = () => {
@@ -14,12 +11,7 @@ const Home = () => {
   if (loading) return <AILoader />;
 
   return (
-    <div className="relative h-screen bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 overflow-hidden ">
-      <Hologrid />
-      <DataRain />
-      <FloatingLeaves />
-      <PulseEffect />
-
+    <MainBackground>
       <div className="container mx-auto px-4 py-2 relative z-10">
         <Header />
 
@@ -28,7 +20,7 @@ const Home = () => {
           <ThreeDScene />
         </main>
       </div>
-    </div>
+    </MainBackground>
   );
 };
 
