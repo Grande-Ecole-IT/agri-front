@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { FiMail, FiLock } from "react-icons/fi";
-import { RiPlantLine, RiRobot2Line } from "react-icons/ri";
 import Lottie from "lottie-react";
+import { useState } from "react";
+import { FiLock, FiMail } from "react-icons/fi";
+import { RiPlantLine, RiRobot2Line } from "react-icons/ri";
+import { Link } from "react-router-dom";
 import robotAnimation from "../assets/robot-farmer.json";
 
 const Register = () => {
@@ -14,9 +14,13 @@ const Register = () => {
     password: "",
   });
 
+  const handleChange = (e) => {
+    setInfo({...info, [e.target.name]: e.target.value});
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Login attempt:", { info });
+    const {email, name , country, region, password} = info;
   };
 
   return (
@@ -80,8 +84,9 @@ const Register = () => {
                 <input
                   id="name"
                   type="text"
+                  name="name"
                   value={info.name}
-                  onChange={(e) => setInfo({ name: e.target.value })}
+                  onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 border border-bolt-gray/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-bolt-dark/20 focus:border-transparent transition-all bg-white/50 backdrop-blur-xs"
                   placeholder="Nom complet"
                   required
@@ -100,8 +105,9 @@ const Register = () => {
                 <input
                   id="country"
                   type="country"
+                  name="country"
                   value={info.country}
-                  onChange={(e) => setInfo({ country: e.target.value })}
+                  onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 border border-bolt-gray/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-bolt-dark/20 focus:border-transparent transition-all bg-white/50 backdrop-blur-xs"
                   placeholder="Madagascar"
                   required
@@ -119,9 +125,10 @@ const Register = () => {
                 <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-bolt-gray group-hover:text-bolt-dark transition-colors" />
                 <input
                   id="email"
+                  name="email"
                   type="email"
                   value={info.email}
-                  onChange={(e) => setInfo({ email: e.target.value })}
+                  onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 border border-bolt-gray/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-bolt-dark/20 focus:border-transparent transition-all bg-white/50 backdrop-blur-xs"
                   placeholder="votre@email.com"
                   required
@@ -140,8 +147,9 @@ const Register = () => {
                 <input
                   id="region"
                   type="region"
+                  name="region"
                   value={info.region}
-                  onChange={(e) => setInfo({ region: e.target.value })}
+                  onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 border border-bolt-gray/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-bolt-dark/20 focus:border-transparent transition-all bg-white/50 backdrop-blur-xs"
                   placeholder="Antananarivo"
                   required
@@ -159,9 +167,10 @@ const Register = () => {
                 <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-bolt-gray group-hover:text-bolt-dark transition-colors" />
                 <input
                   id="password"
+                  name="password"
                   type="password"
                   value={info.password}
-                  onChange={(e) => setInfo({ password: e.target.value })}
+                  onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 border border-bolt-gray/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-bolt-dark/20 focus:border-transparent transition-all bg-white/50 backdrop-blur-xs"
                   placeholder="••••••••"
                   required
