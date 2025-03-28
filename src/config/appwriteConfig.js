@@ -6,8 +6,12 @@ const client = new Client()
 
 const account = new Account(client);
 const databases = new Databases(client);
+const storage = new Storage(client);
+
 
 const databaseId = APPWRITE_DATABASE_ID;
 const usersCollectionId = "users";
+const bucketId = "plantes";
 
-export { account, client, databaseId, databases, ID, Query, usersCollectionId };
+export { account, bucketId, client, databaseId, databases, ID, Query, storage, usersCollectionId };
+
