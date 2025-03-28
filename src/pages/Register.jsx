@@ -20,7 +20,6 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const {email, name , country, region, password} = info;
   };
 
   return (
