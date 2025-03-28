@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { Link } from "react-router";
 import logo from "../assets/logo.png";
 import AuthButtons from "../components/ui/AuthButtons";
 import { useAuth } from "../hooks/useAuth";
@@ -17,9 +16,7 @@ const Header = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Link to="/">
-          <img src={logo} alt="logo" className="w-20 h-20" />
-        </Link>
+        <img src={logo} alt="logo" className="w-20 h-20" />
       </motion.h1>
 
       {user ? <UserMenu /> : <AuthButtons />}
