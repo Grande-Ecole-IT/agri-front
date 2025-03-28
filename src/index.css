@@ -1,3 +1,10 @@
 @import "tailwindcss";
 
 
+@theme {
+  --color-dark: oklch(0.262 0.051 172.552);
+  --color-light:  #BEF264;
+  --color-yellow-pale: #ECFCCB;
+  --color-yellow-bright: #D9F99D;
+  --color-gray: #B0B0B0;
+}
