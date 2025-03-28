@@ -2,8 +2,12 @@
 import { motion } from "framer-motion";
 import logo from "../assets/logo.png";
 import AuthButtons from "../components/ui/AuthButtons";
+import { useAuth } from "../hooks/useAuth";
+import UserMenu from "./UserMenu";
 
 const Header = () => {
+  const { user } = useAuth();
+
   return (
     <header className="flex justify-between items-center">
       <motion.h1
@@ -15,7 +19,7 @@ const Header = () => {
         <img src={logo} alt="logo" className="w-20 h-20" />
       </motion.h1>
 
-      <AuthButtons />
+      {user ? <UserMenu /> : <AuthButtons />}
     </header>
   );
 };

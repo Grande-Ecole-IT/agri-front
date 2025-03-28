@@ -14,7 +14,7 @@ const Home = () => {
   if (loading) return <AILoader />;
 
   return (
-    <div className="relative h-screen bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 overflow-hidden">
+    <div className="relative h-screen bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 overflow-hidden ">
       <Hologrid />
       <DataRain />
       <FloatingLeaves />
