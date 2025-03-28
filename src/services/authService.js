@@ -10,7 +10,7 @@ import { createUser, findUserByAuthId } from "./databases/userService";
  * @param {string} region
  * @returns {Promise<Object>} User account and document
  */
-async function signUp(email, password, name, pays, region) {
+async function signUp({email, password, name, country, region}) {
     try {
         const userAccount = await account.create(ID.unique(), email, password, name);
 
@@ -18,7 +18,7 @@ async function signUp(email, password, name, pays, region) {
             userAccount.$id,
             {
                 name,
-                pays,
+                pays: country,
                 region,
                 email
             });
@@ -54,7 +54,7 @@ async function getCurrentUser() {
  * @param {string} password 
  * @returns {Promise<Object>} user Connected
  */
-async function login(email, password) {
+async function logIn(email, password) {
     try {
         await account.createEmailPasswordSession(email, password);
         return await getCurrentUser();
@@ -68,9 +68,10 @@ async function login(email, password) {
  * Déconnexion de l'utilisateur courant
  * @returns {Promise}
  */
-async function logout() {
+async function logOut() {
     try {
         await account.deleteSession('current');
+        return null
     } catch (error) {
         console.error('Logout error:', error);
         throw error;
@@ -126,6 +127,6 @@ async function logout() {
 // }
 
 export {
-    getCurrentUser, login,
-    logout, signUp
+    getCurrentUser, logIn,
+    logOut, signUp
 };
