@@ -7,13 +7,14 @@ import AILoader from "./AILoader";
 const RedirectConnected = ({children}) => {
     const { user } = useAuth();
     const navigate = useNavigate();
-    const { loading } = useLoading(true);
+    const { loading, stopLoading} = useLoading(true);
 
     useEffect(() => {
         if (user) {
           navigate("/dashboard", { replace: true });
         }
-      }, [user, navigate]);
+        stopLoading();
+      }, [user, navigate, stopLoading]);
 
   return loading ? <AILoader /> : children;
 }
