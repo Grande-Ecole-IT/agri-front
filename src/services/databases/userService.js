@@ -1,4 +1,4 @@
-import { databaseId, databases, usersCollectionId, ID, Query } from "../../config/appwriteConfig";
+import { databaseId, databases, Query, usersCollectionId } from "../../config/appwriteConfig";
 
 /**
  * Crée un document user
@@ -8,7 +8,7 @@ import { databaseId, databases, usersCollectionId, ID, Query } from "../../confi
  */
 async function createUser(userId, userData) {
     try {
-        const document = await databases(
+        const document = await databases.createDocument(
             databaseId,
             usersCollectionId,
             userId,
@@ -121,10 +121,5 @@ async function findUserByAuthId(authUserId) {
 }
 
 export {
-    createUser,
-    getUser,
-    updateUser,
-    deleteUser,
-    listUsers,
-    findUserByAuthId
+    createUser, deleteUser, findUserByAuthId, getUser, listUsers, updateUser
 };

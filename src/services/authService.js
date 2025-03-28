@@ -25,7 +25,7 @@ async function signUp(email, password, name, pays, region) {
 
         return userDocument;
     } catch (error) {
-        console.error('SignUp error:', error);
+        console.log('SignUp error:', error);
         throw error;
     }
 }
@@ -126,8 +126,6 @@ async function logout() {
 // }
 
 export {
-    signUp,
-    login,
-    logout,
-    getCurrentUser,
+    getCurrentUser, login,
+    logout, signUp
 };
