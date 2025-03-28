@@ -1,25 +1,23 @@
+import { useLocation } from "react-router";
+import ChatBot from "../components/ChatBot";
+import GrowthChart from "../components/GrowthChart";
 import Header from "../components/Header";
 import PlantHealth from "../components/PlantHealth";
-import GrowthChart from "../components/GrowthChart";
 import SmartAnalysis from "../components/SmartAnalysis";
-import RecentUpdates from "../components/RecentUpdates";
-import ChatBot from "../components/ChatBot";
-import { useLocation } from "react-router";
 
 export default function AnalysisPage() {
   const location = useLocation();
-  const { result, image } = location.state || {};  // Mets un fallback pour éviter les erreurs
-  console.log(result);
+  const { result, image } = location.state || {};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950">
-      <Header />
-      <main className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row gap-8">
+      <main className="container mx-auto px-4">
+        <Header />
+        <div className="flex flex-col md:flex-row gap-4 mt-4">
           {/* Left Column - Large Image */}
           <div className="md:w-1/2">
             {image && (
-              <div className="relative h-[600px] rounded-2xl overflow-hidden">
+              <div className="relative h-auto rounded-2xl overflow-hidden mb-4">
                 <img
                   src={URL.createObjectURL(image)}
                   alt="Spathiphyllum"
@@ -29,19 +27,18 @@ export default function AnalysisPage() {
                   <h1 className="text-4xl font-bold text-white mb-2">
                     {result.type}
                   </h1>
-                  <p className="text-gray-200">Peace Lily</p>
                 </div>
               </div>
             )}
+            <div className="flex space-x-4">
+              <SmartAnalysis /> <ChatBot />
+            </div>
           </div>
 
           {/* Right Column - Stats */}
           <div className="md:w-1/2 space-y-6">
-            <div className="grid grid-cols-[1fr_0.5fr] space-x-4 bg-white p-6 rounded-xl">
-              <PlantHealth data={result} />
-              <GrowthChart symptoms={result.symptoms} />
-            </div>
-            <RecentUpdates />
+            <PlantHealth data={result} />
+            <GrowthChart symptoms={result.symptoms} />
           </div>
         </div>
       </main>
