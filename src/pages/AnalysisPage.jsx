@@ -4,6 +4,7 @@ import GrowthChart from "../components/GrowthChart";
 import Header from "../components/Header";
 import PlantHealth from "../components/PlantHealth";
 import SmartAnalysis from "../components/SmartAnalysis";
+import BreadCrumb from "../components/BreadCrumb";
 
 export default function AnalysisPage() {
   const location = useLocation();
@@ -13,6 +14,7 @@ export default function AnalysisPage() {
     <div className="min-h-screen bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950">
       <main className="container mx-auto px-4">
         <Header />
+        <BreadCrumb />
         <div className="flex flex-col md:flex-row gap-4 mt-4">
           {/* Left Column - Large Image */}
           <div className="md:w-1/2">
@@ -30,8 +32,9 @@ export default function AnalysisPage() {
                 </div>
               </div>
             )}
-            <div className="flex space-x-4">
-              <SmartAnalysis /> <ChatBot />
+            <div className="flex border justify-between">
+              <SmartAnalysis /> 
+              <ChatBot />
             </div>
           </div>
 
