@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { AiOutlineClose, AiOutlineCloudUpload } from "react-icons/ai";
 import { useNavigate } from "react-router";
 import assistance from "../assets/assistance.jpg";
@@ -8,7 +9,6 @@ import bg from "../assets/bg.jpg";
 import fond from "../assets/fond.jpg";
 import Header from "../components/Header";
 import ServiceCard from "../components/ServiceCard";
-import toast, { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,7 +62,7 @@ const Dashboard = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("plant_image", file);
-    postData(formData)
+    postData(formData);
   };
 
   console.log(analysis);
@@ -108,7 +108,7 @@ const Dashboard = () => {
               <ServiceCard
                 title="Calendrier cultural intelligent"
                 content="Recevez des recommandations personnalisées sur les cultures à planter chaque mois selon votre sol et climat."
-                buttonText="Démarrer"
+                buttonText="Générer"
                 image={fond}
                 action={() => navigate("/calendrier")}
               />

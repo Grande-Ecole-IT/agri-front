@@ -12,13 +12,10 @@ const ServiceCard = ({ title, content, buttonText, action, image }) => {
         <h2 className="text-2xl font-bold text-emerald-900 mb-4">{title}</h2>
         <p className="text-gray-600 mb-8 flex-grow">{content}</p>
 
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          className="self-start" // Aligne le bouton à gauche
-        >
+        <motion.div whileHover={{ scale: 1.02 }} className="self-start">
           <motion.button
             whileHover={{
-              backgroundColor: "#047857", // Une teinte plus foncée au survol
+              backgroundColor: "#047857",
               transition: { duration: 0.2 },
             }}
             whileTap={{ scale: 0.98 }}
