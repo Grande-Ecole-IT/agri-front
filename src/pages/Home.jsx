@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import ThreeDScene from "../components/3D/ThreeDScene";
 import AILoader from "../components/AILoader";
 import Header from "../components/Header";
@@ -6,9 +7,14 @@ import MainBackground from "../components/MainBackground";
 import { useAuth } from "../hooks/useAuth";
 
 const Home = () => {
-  const { loading } = useAuth();
+  const navigate = useNavigate();
+  const { loading, user } = useAuth();
 
   if (loading) return <AILoader />;
+
+  if (user) {
+    return navigate("/dashboard", { replace: true });
+  }
 
   return (
     <MainBackground>
