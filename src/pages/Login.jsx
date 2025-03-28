@@ -1,23 +1,29 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiMail, FiLock } from 'react-icons/fi';
-import { RiPlantLine, RiRobot2Line } from 'react-icons/ri';
 import Lottie from 'lottie-react';
-import Hologrid from "../components/background/Hologrid";
-import FloatingLeaves from "../components/background/FloatingLeaves";
-import DataRain from "../components/background/DataRain";
-import PulseEffect from "../components/ui/PulseEffect";
+import { useState } from 'react';
+import { FiLock, FiMail } from 'react-icons/fi';
+import { ImSpinner9 } from "react-icons/im";
+import { Link } from 'react-router-dom';
 import robotAnimation from '../assets/robot-farmer.json';
-import ThreeDScene from "../components/3D/ThreeDScene";
+import DataRain from "../components/background/DataRain";
+import FloatingLeaves from "../components/background/FloatingLeaves";
+import Hologrid from "../components/background/Hologrid";
+import PulseEffect from "../components/ui/PulseEffect";
+import { useAuth } from '../hooks/useAuth';
+import { useLoading } from '../hooks/useLoading';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {login} = useAuth();
+  const { loading, stopLoading, startLoading } = useLoading();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login attempt:', { email, password });
+    startLoading()
+    login(email, password).catch(console.log).finally(stopLoading);
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950 relative overflow-hidden">
@@ -74,7 +80,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-bolt-gray/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-bolt-dark/20 focus:border-transparent transition-all bg-white/50 backdrop-blur-xs"
-                placeholder="••••••••"
+                placeholder="password"
                 required
               />
             </div>
@@ -82,8 +88,9 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full py-3 px-4 bg-lime-300 from-bolt-dark to-bolt-light text-bolt-dark font-medium rounded-lg hover:opacity-90 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg group relative overflow-hidden"
+            className="w-full flex items-center justify-center space-x-4 py-3 px-4 bg-lime-300 from-bolt-dark to-bolt-light text-bolt-dark font-medium rounded-lg hover:opacity-90 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg group relative overflow-hidden"
           >
+            {loading && <ImSpinner9 className='text-xl animate-spin'/>}
             <span className="relative z-10 flex items-center justify-center gap-2">
               Se connecter
             </span>

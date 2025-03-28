@@ -1,14 +1,17 @@
 import Lottie from "lottie-react";
 import { useState } from "react";
 import { FiLock, FiMail } from "react-icons/fi";
+import { ImSpinner9 } from "react-icons/im";
 import { RiPlantLine, RiRobot2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import robotAnimation from "../assets/robot-farmer.json";
-import { useAuth } from "../hooks/useAuth";
-import Hologrid from "../components/background/Hologrid";
-import FloatingLeaves from "../components/background/FloatingLeaves";
 import DataRain from "../components/background/DataRain";
+import FloatingLeaves from "../components/background/FloatingLeaves";
+import Hologrid from "../components/background/Hologrid";
 import PulseEffect from "../components/ui/PulseEffect";
+import { useAuth } from "../hooks/useAuth";
+import { useLoading } from "../hooks/useLoading";
+
 
 const Register = () => {
   const [info, setInfo] = useState({
@@ -19,15 +22,17 @@ const Register = () => {
     password: "",
   });
 
-  const {signup} = useAuth();
+  const { signup } = useAuth();
+  const { loading, stopLoading, startLoading } = useLoading();
 
   const handleChange = (e) => {
-    setInfo({...info, [e.target.name]: e.target.value});
-  }
-  
+    setInfo({ ...info, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(info).then(console.log).catch(console.log);
+    startLoading();
+    signup(info).catch(console.log).finally(stopLoading);
   };
 
   return (
@@ -191,8 +196,9 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-3 px-4 bg-lime-300 from-bolt-dark to-bolt-light text-bolt-dark font-medium rounded-lg hover:opacity-90 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg group relative overflow-hidden"
+            className="w-full flex items-center justify-center space-x-4 py-3 px-4 bg-lime-300 from-bolt-dark to-bolt-light text-bolt-dark font-medium rounded-lg hover:opacity-90 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg group relative overflow-hidden"
           >
+            {loading && <ImSpinner9 className="text-xl animate-spin"/>}
             <span className="relative z-10 flex items-center justify-center gap-2">
               S&apos;inscrire
             </span>
