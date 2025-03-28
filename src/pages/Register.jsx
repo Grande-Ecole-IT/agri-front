@@ -4,6 +4,7 @@ import { FiLock, FiMail } from "react-icons/fi";
 import { RiPlantLine, RiRobot2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import robotAnimation from "../assets/robot-farmer.json";
+import { useAuth } from "../hooks/useAuth";
 
 const Register = () => {
   const [info, setInfo] = useState({
@@ -14,12 +15,15 @@ const Register = () => {
     password: "",
   });
 
+  const {signup} = useAuth();
+
   const handleChange = (e) => {
     setInfo({...info, [e.target.name]: e.target.value});
   }
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
+    signup(info).then(console.log).catch(console.log);
   };
 
   return (

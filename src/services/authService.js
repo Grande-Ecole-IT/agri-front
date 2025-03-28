@@ -10,7 +10,7 @@ import { createUser, findUserByAuthId } from "./databases/userService";
  * @param {string} region
  * @returns {Promise<Object>} User account and document
  */
-async function signUp(email, password, name, pays, region) {
+async function signUp({email, password, name, country, region}) {
     try {
         const userAccount = await account.create(ID.unique(), email, password, name);
 
@@ -18,7 +18,7 @@ async function signUp(email, password, name, pays, region) {
             userAccount.$id,
             {
                 name,
-                pays,
+                pays: country,
                 region,
                 email
             });
