@@ -1,4 +1,4 @@
-import { Account, Client, Databases, ID, Query } from 'appwrite';
+import { Account, Client, Databases, ID, Query, Storage,  } from 'appwrite';
 import { APPWRITE_DATABASE_ID, APPWRITE_PROJECT_ID } from './env';
 
 const client = new Client()
