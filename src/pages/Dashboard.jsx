@@ -17,9 +17,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const handleFileUpload = (e) => {
-    const uploadedFile = e.target.files[0]; // Récupérer le premier fichier
+    const uploadedFile = e.target.files[0];
     if (uploadedFile) {
-      // Si un fichier est téléchargé, le définir
       setFile(uploadedFile);
     }
   };
@@ -30,7 +29,7 @@ const Dashboard = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setFile(null); // Réinitialiser le fichier après la fermeture du modal
+    setFile(null);
   };
 
   const postData = async (dataToSend) => {
@@ -51,7 +50,7 @@ const Dashboard = () => {
 
       const result = await response.json();
       setAnalysis(result);
-      navigate("/analysis", { state: result });
+      navigate("/analysis", { state: { result, image: file } });
       toast.success("Image envoyee");
     } catch (error) {
       toast.error("Server error");
