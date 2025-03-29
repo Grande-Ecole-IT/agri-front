@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AILoader from "../components/AILoader";
 import BreadCrumb from "../components/BreadCrumb";
 import Header from "../components/Header";
+import LocationSearch from "../components/LocationSearch";
 import RecommandationCard from "../components/RecommandationCard";
 import RecommandationModal from "../components/RecommandationModal";
 import StatBox from "../components/StatBox";
@@ -35,8 +36,9 @@ const Calendrier = () => {
   const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
   const uri = "https://agri-back-fo2l.onrender.com/recommandations/";
   const { user } = useAuth();
+  const [madagascarRegions, setMadagascarRegions] = useState(user?.region);
 
-  const fetchRecommendations = (month) => {
+  const fetchRecommendations = useCallback((month) => {
     setIsLoading(true);
     fetch(uri, {
       method: "POST",
@@ -46,7 +48,7 @@ const Calendrier = () => {
       },
       body: JSON.stringify({
         country: user?.pays,
-        region: user?.region,
+        region: madagascarRegions,
         month: month,
       }),
     })
@@ -59,11 +61,11 @@ const Calendrier = () => {
         console.error(e);
         setIsLoading(false);
       });
-  };
+  },[user?.pays, madagascarRegions]);
 
   useEffect(() => {
     fetchRecommendations(selectedMonth);
-  }, [selectedMonth, user?.pays, user?.region]);
+  }, [fetchRecommendations, selectedMonth]);
 
   const handleMonthChange = (month) => {
     setSelectedMonth(month);
@@ -152,6 +154,7 @@ const Calendrier = () => {
                   {selectedMonth}
                 </h2>
                 <div className="relative">
+                <LocationSearch selectRegion={setMadagascarRegions}/>
                   <button
                     onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
                     className="px-4 py-2 text-base bg-white hover:bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between min-w-[180px] transition-colors duration-200 shadow-sm"
