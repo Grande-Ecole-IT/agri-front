@@ -8,7 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ChatBotPage from "./pages/ChatBotPage";
+import CulturePlan from "./pages/CulturePlan";
 
 function App() {
   return (
@@ -55,12 +55,12 @@ function App() {
                 <AnalysisPage />
               </ProtectedRoute>
             }
-          />
+          /> 
           <Route
-            path="/chatBot"
+            path="/culturePlan"
             element={
               <ProtectedRoute>
-                <ChatBotPage />
+                <CulturePlan />
               </ProtectedRoute>
             }
           />

@@ -28,7 +28,7 @@ const MONTHS = [
 
 const Calendrier = () => {
   const [recommendations, setRecommendations] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); 
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(
     new Date().toLocaleString("fr-FR", { month: "long" })
@@ -39,7 +39,7 @@ const Calendrier = () => {
   const [madagascarRegions, setMadagascarRegions] = useState(user?.region);
 
   const fetchRecommendations = useCallback(
-    (month) => {
+    (month) => {  
       setIsLoading(true);
       fetch(uri, {
         method: "POST",
