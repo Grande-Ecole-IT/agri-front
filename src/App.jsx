@@ -14,9 +14,23 @@ function App() {
     <Router>
       <AuthContextProvider>
         <Routes>
-          <Route path="/login" element={<RedirectConnected><Login /></RedirectConnected>} />
+          <Route
+            path="/login"
+            element={
+              <RedirectConnected>
+                <Login />
+              </RedirectConnected>
+            }
+          />
           <Route path="/register" element={<Register />} />
-          <Route path="/" element={<RedirectConnected><Home /></RedirectConnected>} />
+          <Route
+            path="/"
+            element={
+              <RedirectConnected>
+                <Home />
+              </RedirectConnected>
+            }
+          />
           <Route
             path="/dashboard"
             element={
@@ -26,7 +40,7 @@ function App() {
             }
           />
           <Route
-            path="/calendrier"
+            path="/recommandation"
             element={
               <ProtectedRoute>
                 <Calendrier />

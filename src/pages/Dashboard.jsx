@@ -76,7 +76,7 @@ const Dashboard = () => {
       className="relative min-h-screen overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: `url(${bg})` }}
     >
-      <div className="backdrop-blur-xs bg-black/50">
+      <div className="backdrop-blur-xs bg-black/50 min-h-screen">
         <div className="container mx-auto">
           <Header />
 
@@ -115,7 +115,7 @@ const Dashboard = () => {
                 content="Recevez des recommandations personnalisées sur les cultures à planter chaque mois selon votre sol et climat."
                 buttonText="Générer"
                 image={fond}
-                action={() => navigate("/calendrier")}
+                action={() => navigate("/recommandation")}
               />
             </motion.div>
 
@@ -181,7 +181,9 @@ const Dashboard = () => {
                     )}
 
                     <button className="w-full flex items-center justify-center space-x-4 mt-5 bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition">
-                      {loading && <ImSpinner9 className="text-xl animate-spin"/>}
+                      {loading && (
+                        <ImSpinner9 className="text-xl animate-spin" />
+                      )}
                       <span>Soumettre</span>
                     </button>
                   </form>

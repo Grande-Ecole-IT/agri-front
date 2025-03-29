@@ -8,34 +8,53 @@ export default function SmartAnalysis() {
 
   return (
     <motion.div
-      className="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white rounded-xl p-6 shadow-lg"
-      whileHover={{ scale: 1.01 }}
+      className="bg-white rounded-xl p-6 shadow-lg border border-emerald-100"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -5 }}
     >
       <div className="flex justify-between items-center mb-4">
-        <div>
-          <h2 className="text-xl font-semibold">Recommended Treatments</h2>
-          <p className="text-sm text-emerald-100">Audio guide for plant care</p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <h2 className="text-xl font-semibold text-emerald-950">
+            Recommendation de traitement
+          </h2>
+          <p className="text-sm text-emerald-800">
+            Audio guide pour le traitement
+          </p>
+        </motion.div>
+
         <motion.button
-          className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+          className="p-2 bg-emerald-100 text-emerald-800 rounded-full hover:bg-emerald-200 transition-colors"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => setIsPlaying(!isPlaying)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
         >
           {isPlaying ? <FiPause /> : <FiPlay />}
         </motion.button>
       </div>
 
-      <div className="flex items-center space-x-4">
-        <FiVolume2 className="text-emerald-200" />
+      <motion.div
+        className="flex items-center space-x-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        <FiVolume2 className="text-emerald-600" />
 
         <div className="flex-1 h-auto">
-          <div className="w-full h-full bg-white/20 rounded-lg overflow-hidden">
+          <div className="w-full h-full bg-emerald-50 rounded-lg overflow-hidden">
             <div className="h-full flex items-center space-x-1 px-2">
               {[...Array(20)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="flex-1 h-6 bg-white rounded"
+                  className="flex-1 h-6 bg-emerald-600 rounded"
                   initial={{ opacity: 0.2, scaleY: 0.5 }}
                   animate={{
                     opacity: isPlaying ? [0.3, 0.8, 0.3] : 0.3,
@@ -52,8 +71,8 @@ export default function SmartAnalysis() {
           </div>
         </div>
 
-        <span className="text-sm text-emerald-200">02:45</span>
-      </div>
+        <span className="text-sm text-emerald-800">02:45</span>
+      </motion.div>
     </motion.div>
   );
 }

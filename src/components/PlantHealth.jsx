@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import {
   FiAlertCircle,
   FiCalendar,
@@ -5,47 +7,71 @@ import {
   FiThermometer,
 } from "react-icons/fi";
 
-export default function PlantHealth(data) {
-  console.dir(data.data.type);
+const stats = [
+  {
+    icon: <FiAlertCircle className="text-red-500 text-xl" />,
+    title: "Maladie détectée",
+    value: "symptoms.name",
+    color: "bg-red-50",
+  },
+  {
+    icon: <FiDroplet className="text-blue-500 text-xl" />,
+    title: "Cause probable",
+    value: "symptoms.cause",
+    color: "bg-blue-50",
+  },
+  {
+    icon: <FiThermometer className="text-orange-500 text-xl" />,
+    title: "Gravité",
+    value: "symptoms.severity",
+    color: "bg-amber-50",
+  },
+  {
+    icon: <FiCalendar className="text-emerald-500 text-xl" />,
+    title: "Saison propice",
+    value: "symptoms.seasonal_tendency",
+    color: "bg-emerald-50",
+  },
+];
+
+export default function PlantHealth({ data }) {
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">
-          Diagnostic de la plante : {data.data.type}
+    <motion.div
+      className="bg-white rounded-xl p-6 shadow-lg border border-emerald-100"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      <motion.div
+        className="flex justify-between items-center mb-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.1 }}
+      >
+        <h2 className="text-xl font-semibold text-emerald-950">
+          Diagnostic de la plante : {data.type}
         </h2>
+      </motion.div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {stats.map((stat, index) => (
+          <motion.div
+            key={index}
+            className={`flex items-center space-x-4 p-4 ${stat.color} rounded-lg hover:shadow-md transition-all`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 + index * 0.1 }}
+            whileHover={{ y: -3 }}
+          >
+            <motion.div whileHover={{ scale: 1.1 }}>{stat.icon}</motion.div>
+            <div>
+              <p className="text-sm text-gray-600">{stat.title}</p>
+              <p className="font-semibold text-gray-900">
+                {eval(`data.${stat.value}`)}
+              </p>
+            </div>
+          </motion.div>
+        ))}
       </div>
-      <div className="grid h-1/2 grid-cols-2 gap-4 mb-3">
-        <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-          <FiAlertCircle className="text-red-500 text-xl" />
-          <div>
-            <p className="text-sm text-gray-500">Maladie détectée</p>
-            <p className="font-semibold">{data.data.symptoms?.name}</p>
-          </div>
-        </div>
-        <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-          <FiDroplet className="text-blue-500 text-xl" />
-          <div>
-            <p className="text-sm text-gray-500">Cause probable</p>
-            <p className="font-semibold">{data.data.symptoms?.cause}</p>
-          </div>
-        </div>
-        <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-          <FiThermometer className="text-orange-500 text-xl" />
-          <div>
-            <p className="text-sm text-gray-500">Gravité</p>
-            <p className="font-semibold">{data.data.symptoms?.severity}</p>
-          </div>
-        </div>
-        <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-          <FiCalendar className="text-yellow-500 text-xl" />
-          <div>
-            <p className="text-sm text-gray-500">Saison propice</p>
-            <p className="font-semibold">
-              {data.data.symptoms?.seasonal_tendency}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    </motion.div>
   );
 }

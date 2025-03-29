@@ -1,6 +1,13 @@
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Tooltip } from "recharts";
-import ChatBot from "./ChatBot";
 import { useEffect, useState } from "react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 export default function GrowthChart({ symptoms }) {
   const [data, setData] = useState([]);
@@ -16,19 +23,30 @@ export default function GrowthChart({ symptoms }) {
       if (selectedPeriod === "Month") {
         generatedData = Array.from({ length: 5 }, (_, index) => ({
           name: ["Jan", "Feb", "Mar", "Apr", "May"][index],
-          value: initialValue + index * (speed / 10)
+          value: initialValue + index * (speed / 10),
         }));
-      } 
-      else if (selectedPeriod === "Week") {
+      } else if (selectedPeriod === "Week") {
         generatedData = Array.from({ length: 7 }, (_, index) => ({
           name: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][index],
-          value: initialValue + index * (speed / 20)
+          value: initialValue + index * (speed / 20),
         }));
-      } 
-      else if (selectedPeriod === "Year") {
+      } else if (selectedPeriod === "Year") {
         generatedData = Array.from({ length: 12 }, (_, index) => ({
-          name: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][index],
-          value: initialValue + index * (speed / 5)
+          name: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ][index],
+          value: initialValue + index * (speed / 5),
         }));
       }
 
@@ -54,7 +72,10 @@ export default function GrowthChart({ symptoms }) {
 
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
+            <BarChart
+              data={data}
+              margin={{ top: 10, right: 0, left: 0, bottom: 0 }}
+            >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" tick={{ fill: "#333" }} />
               <YAxis tick={{ fill: "#333" }} />
