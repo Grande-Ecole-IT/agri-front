@@ -10,6 +10,7 @@ const Home = () => {
 
   if (loading) return <AILoader />;
 
+
   return (
     <MainBackground>
       <div className="container mx-auto px-4 py-2 relative z-10">

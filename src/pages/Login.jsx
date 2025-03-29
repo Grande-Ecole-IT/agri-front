@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiLock, FiMail } from "react-icons/fi";
 import { ImSpinner9 } from "react-icons/im";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BackIcon from "../components/BackIcon";
 import MainBackground from "../components/MainBackground";
 import { useAuth } from "../hooks/useAuth";
@@ -12,11 +12,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const { loading, stopLoading, startLoading } = useLoading();
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     startLoading();
-    login(email, password).catch(console.log).finally(stopLoading);
+    login(email, password)
+    .then(() => navigate("/dashboard", { replace: true }))
+    .catch(console.log).finally(stopLoading);
   };
 
   return (

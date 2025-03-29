@@ -9,7 +9,7 @@ const Header = () => {
   const { user } = useAuth();
 
   return (
-    <header className="flex justify-between items-center">
+    <header className="flex justify-between items-center px-3">
       <motion.h1
         className="text-3xl font-bold"
         initial={{ opacity: 0, y: -20 }}
