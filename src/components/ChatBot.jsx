@@ -1,8 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { FiArrowRight, FiMessageSquare } from "react-icons/fi";
+import { useNavigate } from "react-router";
 
-export default function ChatBot() {
+export default function ChatBot({ result }) {
+  const navigate = useNavigate();
+
   return (
     <motion.div
       className="bg-white rounded-xl p-6 shadow-lg border border-emerald-100"
@@ -65,7 +68,16 @@ export default function ChatBot() {
             whileTap={{ scale: 0.98 }}
           >
             <FiMessageSquare />
-            <span>Start Chat</span>
+            <span
+              onClick={(e) => {
+                e.preventDefault();
+                if (result) {
+                  navigate("/chatbot", { state: JSON.stringify(result) });
+                }
+              }}
+            >
+              Start Chat
+            </span>
           </motion.button>
         </div>
       </motion.div>

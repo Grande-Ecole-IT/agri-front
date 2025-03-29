@@ -85,7 +85,7 @@ export default function AnalysisPage() {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <ChatBot />
+              <ChatBot result={result}/>
             </motion.div>
 
             {/* SmartAnalysis */}

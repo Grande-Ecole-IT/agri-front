@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ChatBotPage from "./pages/ChatBotPage";
 
 function App() {
   return (
@@ -52,6 +53,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AnalysisPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chatBot"
+            element={
+              <ProtectedRoute>
+                <ChatBotPage />
               </ProtectedRoute>
             }
           />
