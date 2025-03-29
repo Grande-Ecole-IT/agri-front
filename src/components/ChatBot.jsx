@@ -71,11 +71,7 @@ export default function ChatBot({ isOpen, setIsOpen }) {
           >
             <FiMessageSquare />
             <span
-              onClick={(e) => {
-                // e.preventDefault();
-                // if (result) {
-                //   navigate("/chatbot", { state: JSON.stringify(result) });
-                // }
+              onClick={() => {
                 setIsOpen(!isOpen)
               }}
             >

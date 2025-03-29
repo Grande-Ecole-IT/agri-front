@@ -37,7 +37,6 @@ export default function FloatingChatBot({ isOpen, setIsOpen, result }) {
     setIsTyping(true);
   };
 
-  // WebSocket setup reste identique...
   useEffect(() => {
     if (!user) return;
     const ws = new WebSocket(`https://agri-back-fo2l.onrender.com/ws/${user.$id}`);

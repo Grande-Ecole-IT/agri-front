@@ -47,7 +47,7 @@ function ChatBotPage() {
 
   useEffect(() => {
     if (!user) return;
-    const ws = new WebSocket(`ws://localhost:8000/ws/${user.$id}`);
+    const ws = new WebSocket(`https://agri-back-fo2l.onrender.com//ws/${user.$id}`);
     socket.current = ws;
     ws.onopen = () => {
       console.log("Connexion WebSocket établie");
