@@ -1,8 +1,67 @@
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "framer-motion";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const RecommandationModal = ({ data, onClose }) => {
+  const navigate = useNavigate()
   if (!data) return null;
+
+  const createNewPlan = async () => {
+    const requestBody = {
+      country: "Magagascar",
+      region: "Antanananrivo",
+      cultivation: "Tomate",
+      month: "juin",
+    };
+
+    console.log("Données à envoyer:", requestBody);
+    try {
+      const response = await fetch(
+        "https://agri-back-fo2l.onrender.com/cultivation-plans/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      toast.success("Upload success");
+      navigate("/culturePlan", {state: responseData})
+
+      console.log("Réponse du serveur:", responseData);
+
+      // Gestion de la réponse réussie
+      return {
+        success: true,
+        data: responseData,
+        message: "Plan créé avec succès!",
+      };
+    } catch (error) {
+      console.error("Erreur lors de la création du plan:", error);
+
+      // Gestion des erreurs spécifiques
+      let errorMessage = "Erreur lors de la création du plan";
+      if (error.message.includes("Failed to fetch")) {
+        errorMessage = "Problème de connexion au serveur";
+      } else if (error.message.includes("401")) {
+        errorMessage = "Non autorisé - Veuillez vous reconnecter";
+      }
+
+      return {
+        success: false,
+        error: errorMessage,
+        details: error.message,
+      };
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -251,6 +310,9 @@ const RecommandationModal = ({ data, onClose }) => {
               <motion.button
                 className="px-6 py-2 bg-emerald-800 text-white rounded-lg hover:bg-emerald-900 transition-colors text-sm font-medium flex items-center"
                 whileHover={{ scale: 1.02 }}
+                onClick={() => {
+                  createNewPlan();
+                }}
                 whileTap={{ scale: 0.98 }}
               >
                 <span>Créer un plan de culture</span>
@@ -273,6 +335,21 @@ const RecommandationModal = ({ data, onClose }) => {
           </motion.div>
         </motion.div>
       </motion.div>
+      {/* Toaster personnalisé */}
+      {toast.custom((t) => (
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 20, opacity: 0 }}
+          className={`px-6 py-3 rounded-xl shadow-xl ${
+            t.type === "error"
+              ? "bg-red-500"
+              : "bg-gradient-to-r from-emerald-500 to-lime-500"
+          } text-white font-medium`}
+        >
+          {t.message}
+        </motion.div>
+      ))}
     </AnimatePresence>
   );
 };

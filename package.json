@@ -16,6 +16,8 @@
     "@tailwindcss/vite": "^4.0.15",
     "appwrite": "^17.0.1",
     "framer-motion": "^12.6.2",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
     "lottie-react": "^2.4.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
