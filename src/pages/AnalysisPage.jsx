@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useLocation } from "react-router";
 import AILoader from "../components/AILoader";
+import BreadCrumb from "../components/BreadCrumb";
 import ChatBot from "../components/ChatBot";
 import GrowthChart from "../components/GrowthChart";
 import Header from "../components/Header";
@@ -14,94 +15,89 @@ export default function AnalysisPage() {
 
   return (
     <div className="relative min-h-screen bg-zinc-100">
-      <div className="absolute inset-0 z-0 opacity-5">
-        <div className="absolute inset-0 bg-[url('../assets/grid-pattern.svg')] bg-[length:40px_40px]"></div>
-      </div>
+      <div className="container mx-auto px-4 py-4">
+        <Header />
+        <BreadCrumb />
 
-      <div className="relative z-10 min-h-screen">
-        <div className="container mx-auto px-4 py-4">
-          <Header />
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col gap-6 mt-6"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Image */}
-              <motion.div
-                className="relative rounded-2xl overflow-hidden shadow-lg border border-emerald-100 bg-white"
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                style={{ height: "320px" }}
-              >
-                {image ? (
-                  <>
-                    <img
-                      src={URL.createObjectURL(image)}
-                      alt="Analyse plante"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                      <motion.h1
-                        className="text-3xl font-bold text-white"
-                        initial={{ y: 10, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        {result.type}
-                      </motion.h1>
-                    </div>
-                  </>
-                ) : (
-                  <div className="w-full h-full bg-emerald-50 flex items-center justify-center">
-                    <AILoader size="lg" />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col gap-6 mt-6"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Image */}
+            <motion.div
+              className="relative rounded-2xl overflow-hidden shadow-lg border border-emerald-100 bg-white"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              style={{ height: "320px" }}
+            >
+              {image ? (
+                <>
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt="Analyse plante"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                    <motion.h1
+                      className="text-3xl font-bold text-white"
+                      initial={{ y: 10, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      {result.type}
+                    </motion.h1>
                   </div>
-                )}
-              </motion.div>
+                </>
+              ) : (
+                <div className="w-full h-full bg-emerald-50 flex items-center justify-center">
+                  <AILoader size="lg" />
+                </div>
+              )}
+            </motion.div>
 
-              {/* PlantHealth */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                <PlantHealth data={result} />
-              </motion.div>
-              {/* GrowthChart */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4 }}
-              >
-                <GrowthChart symptoms={result?.symptoms} />
-              </motion.div>
-            </div>
+            {/* PlantHealth */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <PlantHealth data={result} />
+            </motion.div>
+            {/* GrowthChart */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              <GrowthChart symptoms={result?.symptoms} />
+            </motion.div>
+          </div>
 
-            {/* Deuxième ligne - 2 éléments côte-à-côte */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* ChatBot */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.6 }}
-              >
-                <ChatBot />
-              </motion.div>
+          {/* Deuxième ligne - 2 éléments côte-à-côte */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* ChatBot */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              <ChatBot />
+            </motion.div>
 
-              {/* SmartAnalysis */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.7 }}
-              >
-                <SmartAnalysis />
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
+            {/* SmartAnalysis */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              <SmartAnalysis />
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

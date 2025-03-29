@@ -42,7 +42,7 @@ const UserMenu = () => {
 
   return (
     <div className="relative flex items-center gap-3" ref={dropdownRef}>
-      <span className="text-white font-semibold truncate max-w-[120px]">
+      <span className="text-dark font-semibold truncate max-w-[120px]">
         {user?.name}
       </span>
 
