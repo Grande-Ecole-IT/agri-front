@@ -8,14 +8,17 @@ import GrowthChart from "../components/GrowthChart";
 import Header from "../components/Header";
 import PlantHealth from "../components/PlantHealth";
 import SmartAnalysis from "../components/SmartAnalysis";
+import FloatingChatBot from '../components/FloatingChatBot';
+import { useState } from "react";
 
 export default function AnalysisPage() {
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
   const { result, image } = location.state || {};
 
   return (
-    <div className="relative min-h-screen bg-zinc-100">
-      <div className="container mx-auto px-4 pb-4">
+    <div className={`relative min-h-screen bg-zinc-100 `}>
+      <div className={`container mx-auto px-4 pb-4 ${isOpen? "blur-xs": "" }`}>
         <Header />
         <BreadCrumb />
 
@@ -85,7 +88,7 @@ export default function AnalysisPage() {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <ChatBot result={result}/>
+              <ChatBot result={result} isOpen={isOpen} setIsOpen={setIsOpen}/>
             </motion.div>
 
             {/* SmartAnalysis */}
@@ -99,6 +102,7 @@ export default function AnalysisPage() {
           </div>
         </motion.div>
       </div>
+      <FloatingChatBot isOpen={isOpen} setIsOpen={setIsOpen} result={result}/>
     </div>
   );
 }

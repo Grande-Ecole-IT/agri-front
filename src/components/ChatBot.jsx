@@ -1,11 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { FiArrowRight, FiMessageSquare } from "react-icons/fi";
-import { useNavigate } from "react-router";
 
-export default function ChatBot({ result }) {
-  const navigate = useNavigate();
-
+export default function ChatBot({ isOpen, setIsOpen }) {
   return (
     <motion.div
       className="bg-white rounded-xl p-6 shadow-lg border border-emerald-100"
@@ -34,6 +31,11 @@ export default function ChatBot({ result }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
+          onClick={(e) => {
+            e.preventDefault();
+            setIsOpen(!isOpen)
+            console.log(isOpen)
+          }}
         >
           <FiArrowRight />
         </motion.button>
@@ -70,10 +72,11 @@ export default function ChatBot({ result }) {
             <FiMessageSquare />
             <span
               onClick={(e) => {
-                e.preventDefault();
-                if (result) {
-                  navigate("/chatbot", { state: JSON.stringify(result) });
-                }
+                // e.preventDefault();
+                // if (result) {
+                //   navigate("/chatbot", { state: JSON.stringify(result) });
+                // }
+                setIsOpen(!isOpen)
               }}
             >
               Start Chat

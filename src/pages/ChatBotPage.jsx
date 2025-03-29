@@ -129,7 +129,7 @@ function ChatBotPage() {
             type="submit"
             className="px-6 py-4 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-emerald-500 hover:to-green-500 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md"
           >
-            <FaPaperPlane className="text-xl" />
+            <FaPaperPlane className="text-lg" />
           </button>
         </div>
       </form>
