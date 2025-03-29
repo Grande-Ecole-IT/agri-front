@@ -1,7 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { FiPause, FiPlay, FiVolume2 } from "react-icons/fi";
+import { FiVolume2 } from "react-icons/fi";
+import video from "./../assets/audio.mp3";
 
 export default function SmartAnalysis() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -27,17 +28,9 @@ export default function SmartAnalysis() {
           </p>
         </motion.div>
 
-        <motion.button
-          className="p-2 bg-emerald-100 text-emerald-800 rounded-full hover:bg-emerald-200 transition-colors"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsPlaying(!isPlaying)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          {isPlaying ? <FiPause /> : <FiPlay />}
-        </motion.button>
+        <audio controls>
+          <source src={video}></source>
+        </audio>
       </div>
 
       <motion.div
