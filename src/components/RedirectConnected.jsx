@@ -1,22 +1,17 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
-import { useLoading } from "../hooks/useLoading";
 import AILoader from "./AILoader";
 
-const RedirectConnected = ({children}) => {
-    const { user } = useAuth();
-    const navigate = useNavigate();
-    const { loading, stopLoading} = useLoading(true);
+const RedirectConnected = ({ children }) => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (user) {
-          navigate("/dashboard", { replace: true });
-        }
-        stopLoading();
-      }, [user, navigate, stopLoading]);
+  if (user) {
+    navigate("/dashboard");
+    return <AILoader />;
+  }
 
-  return loading ? <AILoader /> : children;
-}
+  return children;
+};
 
-export default RedirectConnected
+export default RedirectConnected;
