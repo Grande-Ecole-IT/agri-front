@@ -6,18 +6,38 @@ import BreadCrumb from "../components/BreadCrumb";
 import Header from "../components/Header";
 import RecommandationCard from "../components/RecommandationCard";
 import RecommandationModal from "../components/RecommandationModal";
+import StatBox from "../components/StatBox";
 import UserCard from "../components/UserCard";
 import { useAuth } from "../hooks/useAuth";
+
+const MONTHS = [
+  "janvier",
+  "février",
+  "mars",
+  "avril",
+  "mai",
+  "juin",
+  "juillet",
+  "août",
+  "septembre",
+  "octobre",
+  "novembre",
+  "décembre",
+];
 
 const Calendrier = () => {
   const [recommendations, setRecommendations] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(
+    new Date().toLocaleString("fr-FR", { month: "long" })
+  );
+  const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
   const uri = "https://agri-back-fo2l.onrender.com/recommandations/";
-  const month = new Date().toLocaleString("fr-FR", { month: "long" });
   const { user } = useAuth();
 
-  useEffect(() => {
+  const fetchRecommendations = (month) => {
+    setIsLoading(true);
     fetch(uri, {
       method: "POST",
       headers: {
@@ -39,7 +59,16 @@ const Calendrier = () => {
         console.error(e);
         setIsLoading(false);
       });
-  }, [month, user?.pays, user?.region]);
+  };
+
+  useEffect(() => {
+    fetchRecommendations(selectedMonth);
+  }, [selectedMonth, user?.pays, user?.region]);
+
+  const handleMonthChange = (month) => {
+    setSelectedMonth(month);
+    setIsMonthDropdownOpen(false);
+  };
 
   return (
     <div className="relative min-h-screen bg-zinc-100">
@@ -64,7 +93,7 @@ const Calendrier = () => {
               >
                 <UserCard
                   saison={recommendations?.season}
-                  month={month.toUpperCase()}
+                  month={selectedMonth}
                   compact
                 />
               </motion.div>
@@ -76,7 +105,7 @@ const Calendrier = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <div className="flex items-center mb-4">
+                <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-emerald-950 flex items-center">
                     <span className="w-2 h-2 bg-lime-300 rounded-full mr-2"></span>
                     Statistiques Clés
@@ -120,20 +149,56 @@ const Calendrier = () => {
               >
                 <h2 className="text-2xl font-bold text-emerald-950">
                   <span className="text-lime-300">//</span> Recommandations pour{" "}
-                  {month}
+                  {selectedMonth}
                 </h2>
-                <motion.div
-                  className="px-3 py-1 bg-emerald-50 text-emerald-800 text-sm rounded-full border border-emerald-100"
-                  animate={{
-                    scale: [1, 1.05, 1],
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 3,
-                  }}
-                >
-                  {recommendations?.recommendations?.length || 0} suggestions
-                </motion.div>
+                <div className="relative">
+                  <button
+                    onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
+                    className="px-4 py-2 text-base bg-white hover:bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between min-w-[180px] transition-colors duration-200 shadow-sm"
+                  >
+                    <span className="font-medium text-emerald-900 capitalize">
+                      {selectedMonth}
+                    </span>
+                    <svg
+                      className={`ml-2 w-5 h-5 transition-transform duration-200 text-emerald-600 ${
+                        isMonthDropdownOpen ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+
+                  {isMonthDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="absolute right-0 mt-2 w-full min-w-[180px] bg-white rounded-xl shadow-lg z-10 border border-emerald-100 overflow-hidden"
+                    >
+                      {MONTHS.map((month) => (
+                        <button
+                          key={month}
+                          onClick={() => handleMonthChange(month)}
+                          className={`block w-full text-left px-4 py-3 text-base hover:bg-emerald-50 transition-colors duration-150 ${
+                            month === selectedMonth
+                              ? "bg-emerald-100 text-emerald-900 font-medium"
+                              : "text-gray-700"
+                          }`}
+                        >
+                          {month.charAt(0).toUpperCase() + month.slice(1)}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </div>
               </motion.div>
 
               {/* Grid des recommandations */}
@@ -193,7 +258,7 @@ const Calendrier = () => {
                     Aucune recommandation
                   </h3>
                   <p className="text-emerald-800">
-                    L'IA n'a trouvé aucune suggestion pour vos critères actuels.
+                    L'IA n'a trouvé aucune suggestion pour {selectedMonth}.
                   </p>
                 </motion.div>
               )}
@@ -209,24 +274,5 @@ const Calendrier = () => {
     </div>
   );
 };
-
-const StatBox = ({ label, value, delay = 0 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay }}
-    className="bg-white p-3 rounded-lg border border-emerald-50 hover:border-lime-300 transition-colors"
-  >
-    <p className="text-xs text-emerald-800 mb-1">{label}</p>
-    <motion.p
-      className="text-lg font-semibold text-emerald-950"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: delay + 0.1 }}
-    >
-      {value}
-    </motion.p>
-  </motion.div>
-);
 
 export default Calendrier;

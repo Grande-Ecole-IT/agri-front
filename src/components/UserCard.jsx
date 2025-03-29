@@ -23,7 +23,7 @@ const UserCard = ({ saison, month }) => {
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
             >
-              {month.charAt(0)}
+              {user?.name.charAt(0)}
             </motion.div>
           </div>
           <div className="ml-4">

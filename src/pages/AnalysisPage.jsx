@@ -15,7 +15,7 @@ export default function AnalysisPage() {
 
   return (
     <div className="relative min-h-screen bg-zinc-100">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 pb-4">
         <Header />
         <BreadCrumb />
 
