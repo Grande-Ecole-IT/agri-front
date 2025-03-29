@@ -3,94 +3,111 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const AILoader = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % 3);
-    }, 800);
-
+      setProgress((prev) => (prev >= 100 ? 0 : prev + 2));
+    }, 100);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950">
-      <div className="text-center">
-        {/* Animation de tiges de croissance */}
-        <div className="relative mx-auto mb-8 h-24 w-24">
-          {[0, 1, 2].map((i) => (
-            <motion.div
-              key={i}
-              className={`absolute left-1/2 h-8 w-1 origin-bottom ${
-                i === activeIndex ? "bg-lime-300" : "bg-white/30"
-              }`}
-              style={{
-                left: `${50 + (i - 1) * 20}%`,
-              }}
-              animate={{
-                height: i === activeIndex ? [8, 32, 8] : 8,
-                opacity: i === activeIndex ? [1, 0.8, 1] : 0.6,
-              }}
-              transition={{
-                duration: 1.6,
-                ease: "easeInOut",
-              }}
-            >
-              {/* Feuille */}
-              {i === activeIndex && (
-                <motion.div
-                  className="absolute -top-1 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-lime-300"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: [0, 1.2, 1] }}
-                  transition={{
-                    duration: 0.8,
-                    times: [0, 0.5, 1],
-                  }}
-                />
-              )}
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Texte avec effet de pulvérisation */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-950">
+      {/* Robot SVG stylisé */}
+      <motion.div
+        animate={{
+          y: [0, -10, 0],
+          rotate: [0, 5, -5, 0],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="mb-8"
+      >
+        <svg
+          width="120"
+          height="120"
+          viewBox="0 0 120 120"
+          className="text-lime-300"
         >
-          <h2 className="text-xl font-medium text-lime-300">AiGro</h2>
-          <motion.p
-            className="mt-1 text-white/80"
-            animate={{
-              opacity: [0.6, 1, 0.6],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-            }}
-          >
-            Initialisation...
-          </motion.p>
-        </motion.div>
+          {/* Corps du robot */}
+          <motion.path
+            d="M60 30c-16.54 0-30 13.46-30 30v30h60V60c0-16.54-13.46-30-30-30z"
+            fill="currentColor"
+            initial={{ opacity: 0.8 }}
+            animate={{ opacity: [0.8, 1, 0.8] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
 
-        {/* Points de progression discrets */}
-        <div className="mt-6 flex justify-center space-x-2">
-          {[0, 1, 2].map((i) => (
-            <motion.div
-              key={i}
-              className={`h-2 w-2 rounded-full ${
-                i === activeIndex ? "bg-lime-300" : "bg-white/30"
-              }`}
-              animate={{
-                scale: i === activeIndex ? [1, 1.3, 1] : 1,
-              }}
-              transition={{
-                duration: 1.5,
-              }}
-            />
-          ))}
+          {/* Tête */}
+          <circle cx="60" cy="30" r="15" fill="currentColor" />
+
+          {/* Yeux */}
+          <motion.circle
+            cx="50"
+            cy="25"
+            r="3"
+            fill="#0f172a"
+            animate={{ r: [3, 4, 3] }}
+            transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
+          />
+          <motion.circle
+            cx="70"
+            cy="25"
+            r="3"
+            fill="#0f172a"
+            animate={{ r: [3, 4, 3] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
+
+          {/* Antenne */}
+          <motion.path
+            d="M60 15v-10"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          />
+          <circle cx="60" cy="5" r="3" fill="#ef4444" />
+        </svg>
+      </motion.div>
+
+      {/* Contenu texte */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="text-center space-y-6"
+      >
+        <h2 className="text-2xl font-bold text-lime-300">
+          <motion.span
+            animate={{ opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            Ai
+          </motion.span>
+          <span className="text-white">Gro</span>
+        </h2>
+
+        {/* Barre de progression élégante */}
+        <div className="w-64 h-2 bg-emerald-800 rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-lime-300 to-emerald-400"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.3 }}
+          />
         </div>
-      </div>
+
+        <p className="text-emerald-200 font-mono text-sm">
+          Chargement en cours... {progress}%
+        </p>
+      </motion.div>
     </div>
   );
 };

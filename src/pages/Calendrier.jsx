@@ -38,34 +38,38 @@ const Calendrier = () => {
   const { user } = useAuth();
   const [madagascarRegions, setMadagascarRegions] = useState(user?.region);
 
-  const fetchRecommendations = useCallback((month) => {
-    setIsLoading(true);
-    fetch(uri, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        country: user?.pays,
-        region: madagascarRegions,
-        month: month,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setRecommendations(data);
-        setIsLoading(false);
+  const fetchRecommendations = useCallback(
+    (month) => {
+      setIsLoading(true);
+      fetch(uri, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          country: user?.pays,
+          region: madagascarRegions,
+          month: month,
+        }),
       })
-      .catch((e) => {
-        console.error(e);
-        setIsLoading(false);
-      });
-  },[user?.pays, madagascarRegions]);
+        .then((response) => response.json())
+        .then((data) => {
+          setRecommendations(data);
+          setIsLoading(false);
+        })
+        .catch((e) => {
+          console.error(e);
+          setIsLoading(false);
+        });
+    },
+    [user?.pays, madagascarRegions]
+  );
 
   useEffect(() => {
     fetchRecommendations(selectedMonth);
   }, [fetchRecommendations, selectedMonth]);
+  [selectedMonth, user?.pays, user?.region];
 
   const handleMonthChange = (month) => {
     setSelectedMonth(month);
@@ -92,12 +96,16 @@ const Calendrier = () => {
                 initial={{ y: -20 }}
                 animate={{ y: 0 }}
                 transition={{ type: "spring" }}
+                className="space-y-6"
               >
                 <UserCard
                   saison={recommendations?.season}
                   month={selectedMonth}
                   compact
                 />
+
+                {/* LocationSearch placé en dessous de UserCard */}
+                <LocationSearch selectRegion={setMadagascarRegions} />
               </motion.div>
 
               {/* Carte Statistiques */}
@@ -114,7 +122,7 @@ const Calendrier = () => {
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-3">
                   <StatBox
                     label="Saison"
                     value={recommendations?.season || "N/A"}
@@ -154,7 +162,6 @@ const Calendrier = () => {
                   {selectedMonth}
                 </h2>
                 <div className="relative">
-                <LocationSearch selectRegion={setMadagascarRegions}/>
                   <button
                     onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
                     className="px-4 py-2 text-base bg-white hover:bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between min-w-[180px] transition-colors duration-200 shadow-sm"

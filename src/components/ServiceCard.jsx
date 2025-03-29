@@ -2,55 +2,49 @@
 import { motion } from "framer-motion";
 import { VscArrowRight } from "react-icons/vsc";
 
-const ServiceCard = ({ title, content, buttonText, action, image }) => {
+const ServiceCard = ({ title, content, buttonText, action }) => {
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      className="bg-white rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row h-full shadow-slate-800/30 border border-gray-100"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      whileHover={{
+        y: -4,
+        transition: { duration: 0.2 },
+      }}
+      className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all z-20"
     >
-      <div className="p-8 md:w-2/3 flex flex-col">
-        <h2 className="text-2xl font-bold text-emerald-900 mb-4">{title}</h2>
-        <p className="text-gray-600 mb-8 flex-grow">{content}</p>
+      <div className="flex flex-col h-full space-y-5">
+        <div>
+          <div className="w-8 h-1 bg-gradient-to-r from-emerald-400 to-lime-400 mb-3 rounded-full"></div>
+          <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+        </div>
 
-        <motion.div whileHover={{ scale: 1.02 }} className="self-start">
-          <motion.button
-            whileHover={{
-              backgroundColor: "#047857",
-              transition: { duration: 0.2 },
+        <p className="text-gray-600 flex-grow">{content}</p>
+
+        <motion.button
+          whileHover={{
+            boxShadow: "0 4px 15px rgba(134, 239, 172, X)",
+            transition: { duration: 0.3 },
+          }}
+          whileTap={{ scale: 0.96 }}
+          className="w-full px-6 py-3.5 rounded-xl font-medium text-white bg-gradient-to-r from-emerald-500 to-lime-500 shadow-lg flex items-center justify-center gap-2 transition-all duration-200"
+          onClick={action}
+        >
+          <span>{buttonText}</span>
+          <motion.div
+            animate={{
+              x: [0, 4, 0],
+              transition: {
+                repeat: Infinity,
+                duration: 1.5,
+                ease: "easeInOut",
+              },
             }}
-            whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-800 text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-emerald-200 transition-all"
-            onClick={action}
           >
-            <span className="whitespace-nowrap">{buttonText}</span>
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{
-                opacity: 1,
-                x: 0,
-                transition: {
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 1.5,
-                    ease: "easeInOut",
-                  },
-                },
-              }}
-              whileHover={{ x: 5 }}
-            >
-              <VscArrowRight size={18} />
-            </motion.div>
-          </motion.button>
-        </motion.div>
-      </div>
-
-      <div className="md:w-1/3 h-64 md:h-auto overflow-hidden">
-        <img
-          src={image}
-          alt="Service"
-          className="w-full h-full object-cover object-center"
-        />
+            <VscArrowRight size={18} className="text-emerald-950" />
+          </motion.div>
+        </motion.button>
       </div>
     </motion.div>
   );
