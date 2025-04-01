@@ -116,19 +116,19 @@ const Dashboard = () => {
             />
           </motion.section>
         </motion.main>
-
-        {/* Modal futuriste */}
-        {isModalOpen && (
+      </div>
+      {/* Modal futuriste */}
+      {isModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/40 backdrop-blur-md flex justify-center p-4 z-50"
           >
             <motion.div
               initial={{ scale: 0.9, y: 50, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               transition={{ type: "spring", damping: 20 }}
-              className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-gray-200/50"
+              className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl w-full max-w-lg overflow-auto border border-gray-200/50"
             >
               <form onSubmit={handleSubmit} className="p-8">
                 <div className="flex justify-between items-center mb-6">
@@ -217,7 +217,6 @@ const Dashboard = () => {
             </motion.div>
           </motion.div>
         )}
-      </div>
 
       {/* Toaster personnalisé */}
       {toast.custom((t) => (

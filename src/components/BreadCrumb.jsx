@@ -1,7 +1,12 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 
 const BreadCrumb = () => {
   const location = useLocation();
+  const pathSegments = location.pathname?.split("/").filter(Boolean);
+
+  const getPathForSegment = (index) => {
+    return "/" + pathSegments.slice(0, index + 1).join("/");
+  };
 
   return (
     <div className="m-5">
@@ -30,31 +35,37 @@ const BreadCrumb = () => {
               Home
             </Link>
           </li>
-          <li className="rtl:rotate-180">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 text-gray-600"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </li>
 
-          <li>
-            <span
-              className="capitalize text-green-600 transition-all duration-300 ease-in-out hover:text-green-500 hover:scale-105 border-b-2 p-1"
-            >
-              {location.pathname?.slice(1)}
-            </span>
-          </li>
+          {pathSegments?.map((path, index) => (
+            <li key={index} className="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4 text-gray-600 mx-2"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <Link
+                to={getPathForSegment(index)}
+                className={`capitalize transition-all duration-300 ease-in-out hover:text-green-500 hover:scale-105 ${
+                  index === pathSegments.length - 1
+                    ? "text-green-600 border-b-2 p-1" // Style pour le dernier élément
+                    : "text-green-600" // Style pour les autres éléments
+                }`}
+              >
+                {path}
+              </Link>
+            </li>
+          ))}
         </ol>
       </nav>
     </div>
   );
 };
+
 export default BreadCrumb;

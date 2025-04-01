@@ -37,7 +37,7 @@ const RecommandationModal = ({ data, onClose }) => {
 
       const responseData = await response.json();
       toast.success("Upload success");
-      navigate("/culturePlan", { state: responseData });
+      navigate("/recommandation/culturePlan", { state: responseData });
 
       return {
         success: true,

@@ -57,7 +57,7 @@ function App() {
             }
           /> 
           <Route
-            path="/culturePlan"
+            path="/recommandation/culturePlan"
             element={
               <ProtectedRoute>
                 <CulturePlan />

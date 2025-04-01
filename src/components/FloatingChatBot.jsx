@@ -30,7 +30,11 @@ export default function FloatingChatBot({ isOpen, setIsOpen, result }) {
     setMessages(newMessages);
 
     if (socket.current?.readyState === WebSocket.OPEN) {
-      socket.current.send(inputMessage);
+      const message = {
+        type: "user_message",
+        content: inputMessage
+      }
+      socket.current.send(JSON.stringify(message));
     }
 
     setInputMessage("");
@@ -43,7 +47,11 @@ export default function FloatingChatBot({ isOpen, setIsOpen, result }) {
     socket.current = ws;
     ws.onopen = () => {
       console.log("Connexion WebSocket établie");
-      ws.send(result);
+      const initMessage = {
+        type: "prompt_init",
+        content: JSON.stringify(result),
+      };
+      ws.send(JSON.stringify(initMessage));
     };
 
     ws.onmessage = (event) => {
@@ -73,7 +81,11 @@ export default function FloatingChatBot({ isOpen, setIsOpen, result }) {
   }, [user, result]);
 
   return (
-    <div className={`fixed -bottom-12 left-8 z-50 ${isOpen? "backdrop-blur-3xl": "" }`}>
+    <div
+      className={`fixed -bottom-12 left-8 z-50 ${
+        isOpen ? "backdrop-blur-3xl" : ""
+      }`}
+    >
       <div
         className={`rounded-xl absolute bottom-20 left-0.5 w-96 h-[500px] bg-white shadow-xl transition-all duration-300 transform ${
           isOpen
