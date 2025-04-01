@@ -28,7 +28,7 @@ const stats = [
   },
   {
     icon: <FiCalendar className="text-emerald-500 text-xl" />,
-    title: "Saison propice",
+    title: "Saison à risque",
     value: "symptoms.seasonal_tendency",
     color: "bg-emerald-50",
   },

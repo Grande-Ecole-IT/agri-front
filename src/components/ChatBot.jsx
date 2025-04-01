@@ -52,16 +52,16 @@ export default function ChatBot({ isOpen, setIsOpen }) {
           whileHover={{ scale: 1.05 }}
         >
           <img
-            src="https://images.unsplash.com/photo-1531747056595-07f6cbbe10ad?q=80&w=250&auto=format&fit=crop"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWWhQuQKz5Z5zzc4kqyOsHYtSZ4b0RfiJ7Ls25v_WDdBhkB3a32skx5P-ORbQ8jiv39ng&usqp=CAU"
             alt="AI Bot"
             className="w-full h-full object-cover"
           />
         </motion.div>
 
         <div className="flex-1">
-          <p className="text-sm text-emerald-800">Need help with your plant?</p>
+          <p className="text-sm text-emerald-800">Plus de questions ? </p>
           <p className="text-sm font-medium text-emerald-950">
-            Ask me anything about plant care!
+            Pose-moi n'importe quelle question sur cette plante !
           </p>
 
           <motion.button
