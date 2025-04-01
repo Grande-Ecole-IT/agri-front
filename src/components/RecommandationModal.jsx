@@ -7,19 +7,18 @@ import { useNavigate } from "react-router";
 const RecommandationModal = ({ data, onClose }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-
+  
   if (!data) return null;
 
   const createNewPlan = async () => {
     setIsLoading(true);
     const requestBody = {
       country: "Magagascar",
-      region: "Antanananrivo",
-      cultivation: "Tomate",
-      month: "juin",
+      region: data.madagascarRegions,
+      cultivation: data.selectedCard?.name,
+      month: data.selectedMonth,
     };
 
-    console.log("Données à envoyer:", requestBody);
     try {
       const response = await fetch(
         "https://agri-back-fo2l.onrender.com/cultivation-plans/",
@@ -40,7 +39,6 @@ const RecommandationModal = ({ data, onClose }) => {
       toast.success("Upload success");
       navigate("/culturePlan", { state: responseData });
 
-      console.log("Réponse du serveur:", responseData);
       return {
         success: true,
         data: responseData,
@@ -93,7 +91,7 @@ const RecommandationModal = ({ data, onClose }) => {
                   initial={{ x: -10 }}
                   animate={{ x: 0 }}
                 >
-                  {data.name}
+                  {data.selectedCard && data.selectedCard.name}
                 </motion.h3>
                 <motion.span
                   className="inline-block mt-2 px-3 py-1 bg-emerald-950 text-white rounded-full text-xs font-medium"
@@ -101,7 +99,7 @@ const RecommandationModal = ({ data, onClose }) => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.1 }}
                 >
-                  {data.type}
+                  {data.selectedCard && data.selectedCard.type}
                 </motion.span>
               </div>
               <motion.button
@@ -145,7 +143,7 @@ const RecommandationModal = ({ data, onClose }) => {
                     Avantages Clés
                   </h4>
                   <ul className="space-y-3">
-                    {data.reasons.map((reason, i) => (
+                    {data.selectedCard && data.selectedCard.reasons.map((reason, i) => (
                       <motion.li
                         key={i}
                         className="flex items-start"
@@ -171,7 +169,7 @@ const RecommandationModal = ({ data, onClose }) => {
                     Ressources Nécessaires
                   </h4>
                   <ul className="space-y-3">
-                    {data.required_resources.map((resource, i) => (
+                    {data.selectedCard && data.selectedCard.required_resources.map((resource, i) => (
                       <motion.li
                         key={i}
                         className="flex items-start"
@@ -206,7 +204,7 @@ const RecommandationModal = ({ data, onClose }) => {
                         Minimum:
                       </p>
                       <p className="text-emerald-950 font-medium">
-                        {data.yields.min}
+                        {data.selectedCard && data.selectedCard.yields.min}
                       </p>
                     </div>
                     <div>
@@ -214,7 +212,7 @@ const RecommandationModal = ({ data, onClose }) => {
                         Maximum:
                       </p>
                       <p className="text-emerald-950 font-medium">
-                        {data.yields.max}
+                        {data.selectedCard && data.selectedCard.yields.max}
                       </p>
                     </div>
                     <div className="pt-2">
@@ -242,7 +240,7 @@ const RecommandationModal = ({ data, onClose }) => {
                     Analyse des Coûts
                   </h4>
                   <ul className="space-y-3">
-                    {Object.entries(data.estimated_cost_per_ha).map(
+                    {data.selectedCard && Object.entries(data.selectedCard.estimated_cost_per_ha).map(
                       ([key, value], i) => (
                         <motion.li
                           key={key}
@@ -280,7 +278,7 @@ const RecommandationModal = ({ data, onClose }) => {
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.6, type: "spring" }}
                   >
-                    {data.profit_potential}
+                    {data.selectedCard && data.selectedCard.profit_potential}
                   </motion.p>
                   <motion.div
                     className="mt-3 text-xs text-emerald-800"

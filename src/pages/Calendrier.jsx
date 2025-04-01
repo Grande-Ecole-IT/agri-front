@@ -28,7 +28,7 @@ const MONTHS = [
 
 const Calendrier = () => {
   const [recommendations, setRecommendations] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(
     new Date().toLocaleString("fr-FR", { month: "long" })
@@ -37,9 +37,11 @@ const Calendrier = () => {
   const uri = "https://agri-back-fo2l.onrender.com/recommandations/";
   const { user } = useAuth();
   const [madagascarRegions, setMadagascarRegions] = useState(user?.region);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [insightData, setInsightData] = useState(null);
 
   const fetchRecommendations = useCallback(
-    (month) => {  
+    (month) => {
       setIsLoading(true);
       fetch(uri, {
         method: "POST",
@@ -70,6 +72,15 @@ const Calendrier = () => {
     fetchRecommendations(selectedMonth);
   }, [fetchRecommendations, selectedMonth]);
   [selectedMonth, user?.pays, user?.region];
+
+  useEffect(() => {
+    setInsightData((prev) => ({
+      ...prev,
+      selectedMonth,
+      madagascarRegions,
+      selectedCard,
+    }));
+  }, [selectedMonth, selectedCard, madagascarRegions]);
 
   const handleMonthChange = (month) => {
     setSelectedMonth(month);
@@ -227,7 +238,10 @@ const Calendrier = () => {
                         key={rec.id || index}
                         data={rec}
                         index={index}
-                        onClick={() => setSelectedCard(rec)}
+                        onClick={() => {
+                          setIsModalOpen(true);
+                          setSelectedCard(rec);
+                        }}
                         compact
                       />
                     ))}
@@ -276,11 +290,12 @@ const Calendrier = () => {
           </motion.div>
         </div>
       </div>
-
-      <RecommandationModal
-        data={selectedCard}
-        onClose={() => setSelectedCard(null)}
-      />
+      {isModalOpen && (
+        <RecommandationModal
+          data={insightData}
+          onClose={() => setInsightData(null)}
+        />
+      )}
     </div>
   );
 };
